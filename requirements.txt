@@ -1,0 +1,4 @@
+grpcio==1.56.2
+grpcio-tools==1.56.2
+tinyaes==1.0.4
+pyinstaller==5.13.0

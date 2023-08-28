@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+service MathOperations {
+  rpc MatrixMultiply(MatrixRequest) returns (MatrixResponse) {}
+}
+
+message MatrixRequest {
+  repeated double values = 1;
+  int32 columns = 2;
+}
+
+message MatrixResponse {
+  repeated double values = 1;
+}

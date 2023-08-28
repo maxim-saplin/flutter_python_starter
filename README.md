@@ -1,0 +1,1 @@
+Run `zsh build-grpc-bindings.sh` in terminal. It will install all required Python and Dart dependencies (protoc, PyInstaller etc) and (re)create Dart and Python bindings/boilerplate code
