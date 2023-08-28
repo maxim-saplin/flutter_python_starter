@@ -25,3 +25,41 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# Adding Python specific ignores
+
+# Add Python cache files
+__pycache__/
+
+# Add Python compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Add Python virtual environment
+venv/
+
+# Add Python distribution directories
+dist/
+build/
+*.egg-info/
+
+# Add Python development files
+*.egg
+*.egg-info
+*.egg-info/
+*.dist-info/
+*.dist-info
+
+# Add Python log files
+*.log
+
+# Add Python test coverage files
+.coverage
+htmlcov/
+
+# Add Python profiling files
+.prof
+
+# Add Python package cache
+.pycache/
