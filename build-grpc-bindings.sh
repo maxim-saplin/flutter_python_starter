@@ -83,5 +83,12 @@ if __name__ == '__main__':
 EOF
 )
 
-echo "$serverpy" >| $pythonDir/server.py
+if [ ! -f "$pythonDir/server.py" ]; then
+echo "$serverpy" > "$pythonDir/server.py"
+fi
+
+if [ ! -f "$pythonDir/requirements.txt" ]; then
+echo "grpcio" > "$pythonDir/requirements.txt"
+fi
+
 echo -e "\e[32m\nDart/Flutter and Python bindings have been generated for '$proto' definition"
