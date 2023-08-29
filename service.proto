@@ -1,14 +1,9 @@
 syntax = "proto3";
 
-service MathOperations {
-  rpc MatrixMultiply(MatrixRequest) returns (MatrixResponse) {}
+service NumberSortingService {
+  rpc SortNumbers (NumberArray) returns (NumberArray) {}
 }
 
-message MatrixRequest {
-  repeated double values = 1;
-  int32 columns = 2;
-}
-
-message MatrixResponse {
-  repeated double values = 1;
+message NumberArray {
+  repeated int32 numbers = 1;
 }
