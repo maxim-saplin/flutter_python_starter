@@ -35,11 +35,14 @@ dart pub global activate protoc_plugin
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 # Generate Dart code
-mkdir -p ./$flutterDir/lib/src/generated/
-protoc --dart_out=grpc:./$flutterDir/lib/src/generated $proto
+mkdir -p ./$flutterDir/lib/grpc_generated/
+protoc --dart_out=grpc:./$flutterDir/lib/grpc_generated $proto
+cd $flutterDir
+flutter pub add grpc
+cd ..
 
 # Generate Python code
 mkdir -p ./$pythonDir/
 python3 -m grpc_tools.protoc -I. --python_out=./$pythonDir --grpc_python_out=./$pythonDir $proto
 
-echo -e "\e[32m\nDart/Flutter and Python bindings have been generated for PROTO definition"
+echo -e "\e[32m\nDart/Flutter and Python bindings have been generated for '$proto' definition"
