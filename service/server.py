@@ -1,7 +1,7 @@
 import sys
 from concurrent import futures 
 import grpc
-from .grpc_generated import service_pb2_grpc
+import service_pb2_grpc
 
 from math_operations import MathOperations  
 

@@ -1,8 +1,8 @@
 from concurrent import futures
 import numpy as np
 
-from .grpc_generated import service_pb2_grpc
-from .grpc_generated import service_pb2
+import service_pb2_grpc
+import service_pb2
 
 class MathOperations(service_pb2_grpc.MathOperationsServicer):
     def MatrixMultiply(self, request, context):
