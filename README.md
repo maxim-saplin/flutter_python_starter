@@ -1,4 +1,10 @@
-A sample of integrating Flutter Desktop Apps with Python by wrapping Python functionality into gRPC service and bundling it as Flutter asset file with self-contained binary executable (it includes Python runtime and all required dependencies to be independent from local installation).
+Starter kit for integrating Flutter and Python
+
+- build-grpc-bindings.sh
+- /templates
+- README.md
+
+A sample of integrated app is available under `_emaple` folder
 
 ## 1. Preparing Flutter and Python projects
 

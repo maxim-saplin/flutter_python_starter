@@ -1,0 +1,1 @@
+A sample of integrating Flutter Desktop Apps with Python by wrapping Python functionality into gRPC service and bundling it as Flutter asset file with self-contained binary executable (it includes Python runtime and all required dependencies to be independent from local installation).
