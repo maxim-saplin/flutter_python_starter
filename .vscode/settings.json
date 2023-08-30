@@ -6,5 +6,9 @@
         "markdown",
         "latex",
         "plaintext"
-    ]
+    ],
+    "python.analysis.ignore": [
+        "templates"
+    ],
+
 }

@@ -26,8 +26,11 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Code:
-serviceName="${proto%.proto}"
+serviceName=$(basename "$proto" .proto)
+
+# echo "proto: $proto"
+# echo "flutterDir: $flutterDir"
+# echo "pythonDir: $pythonDir"
 
 # Prepare Dart/Flutter
 brew install protobuf
@@ -42,49 +45,27 @@ pip3 install tinyaes
 pip3 install pyinstaller
 
 # Generate Dart code
-mkdir -p ./$flutterDir/lib/grpc_generated
-protoc --dart_out=grpc:./$flutterDir/lib/grpc_generated $proto
+mkdir -p $flutterDir/lib/grpc_generated
+protoc --dart_out=grpc:$flutterDir/lib/grpc_generated $proto
+# Store current working directory to a variable
+
+currentDir=$(pwd)
 cd $flutterDir
 flutter pub add grpc
-cd ..
+cd $currentDir
 
 # Generate Python code
-mkdir -p ./$pythonDir
-python3 -m grpc_tools.protoc -I. --python_out=./$pythonDir --grpc_python_out=./$pythonDir $proto
+mkdir -p $pythonDir
+python3 -m grpc_tools.protoc -I. --python_out=$pythonDir --grpc_python_out=$pythonDir $proto
 
 # Pyhton boilderplate code for running self-hosted gRPC server
 serverpy=$(cat << EOF
-import sys
-from concurrent import futures 
-import grpc
-import ${serviceName}_pb2_grpc
-
-# TODO, import service implementation, e.g.
-# from math_operations import MathOperations  
-
-def serve():
-  DEFAULT_PORT = 50055
-  # Get the port number from the command line parameter    
-  port = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_PORT
-  HOST = f'localhost:{port}'
-
-  server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-
-  # TODO, add your gRPC service to self-hosted server, e.g.
-  # service_pb2_grpc.add_MathOperationsServicer_to_server(MathOperations(), server)
-
-  server.add_insecure_port(HOST)
-  print(f"gRPC server started and listening on {HOST}")
-  server.start()
-  server.wait_for_termination()
-  
-if __name__ == '__main__':
-  serve()  
+$(<templates/server.py)
 EOF
 )
 
 if [ ! -f "$pythonDir/server.py" ]; then
-echo "$serverpy" > "$pythonDir/server.py"
+echo "${serverpy//\$\{serviceName\}/$serviceName}" > "$pythonDir/server.py"
 fi
 
 if [ ! -f "$pythonDir/requirements.txt" ]; then

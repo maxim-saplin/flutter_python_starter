@@ -4,7 +4,7 @@ Starter kit for integrating Flutter and Python
 - /templates
 - README.md
 
-A sample of integrated app is available under `_emaple` folder
+A sample of integrated app is available under `_example` folder
 
 ## 1. Preparing Flutter and Python projects
 
@@ -16,7 +16,7 @@ This is the service definition to be implemented by Python and used by Flutter c
 
 ## 3. Dart and Python boilerplate
 
-Run `zsh build-grpc-bindings.sh --proto service.proto --flutterDir app --pythonDir service` in terminal.
+Run `zsh build-grpc-bindings.sh --proto ./service.proto --flutterDir ./app --pythonDir ./service` in terminal.
 
 What it does is:
 1. Installs all dependencies:
