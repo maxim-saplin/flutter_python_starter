@@ -5,7 +5,7 @@ import grpc
 import service_pb2 as service__pb2
 
 
-class MathOperationsStub(object):
+class NumberSortingServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,42 +14,42 @@ class MathOperationsStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.MatrixMultiply = channel.unary_unary(
-                '/MathOperations/MatrixMultiply',
-                request_serializer=service__pb2.MatrixRequest.SerializeToString,
-                response_deserializer=service__pb2.MatrixResponse.FromString,
+        self.SortNumbers = channel.unary_unary(
+                '/NumberSortingService/SortNumbers',
+                request_serializer=service__pb2.NumberArray.SerializeToString,
+                response_deserializer=service__pb2.NumberArray.FromString,
                 )
 
 
-class MathOperationsServicer(object):
+class NumberSortingServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def MatrixMultiply(self, request, context):
+    def SortNumbers(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_MathOperationsServicer_to_server(servicer, server):
+def add_NumberSortingServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'MatrixMultiply': grpc.unary_unary_rpc_method_handler(
-                    servicer.MatrixMultiply,
-                    request_deserializer=service__pb2.MatrixRequest.FromString,
-                    response_serializer=service__pb2.MatrixResponse.SerializeToString,
+            'SortNumbers': grpc.unary_unary_rpc_method_handler(
+                    servicer.SortNumbers,
+                    request_deserializer=service__pb2.NumberArray.FromString,
+                    response_serializer=service__pb2.NumberArray.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'MathOperations', rpc_method_handlers)
+            'NumberSortingService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class MathOperations(object):
+class NumberSortingService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def MatrixMultiply(request,
+    def SortNumbers(request,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +59,8 @@ class MathOperations(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/MathOperations/MatrixMultiply',
-            service__pb2.MatrixRequest.SerializeToString,
-            service__pb2.MatrixResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/NumberSortingService/SortNumbers',
+            service__pb2.NumberArray.SerializeToString,
+            service__pb2.NumberArray.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

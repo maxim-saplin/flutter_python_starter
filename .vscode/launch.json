@@ -5,6 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "zshdb",
+            "request": "launch",
+            "name": "Zsh-Debug (hardcoded script name)",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/prepare-sources.sh",
+            "args": ["--proto", "./_example/service.proto", 
+                    "--flutterDir", "./_example/app",
+                    "--pythonDir", "./_example/service"]
+        },
+        {
             "name": "app",
             "cwd": "_example/app",
             "request": "launch",

@@ -19,41 +19,41 @@ import 'service.pb.dart' as $0;
 
 export 'service.pb.dart';
 
-@$pb.GrpcServiceName('MathOperations')
-class MathOperationsClient extends $grpc.Client {
-  static final _$matrixMultiply = $grpc.ClientMethod<$0.MatrixRequest, $0.MatrixResponse>(
-      '/MathOperations/MatrixMultiply',
-      ($0.MatrixRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.MatrixResponse.fromBuffer(value));
+@$pb.GrpcServiceName('NumberSortingService')
+class NumberSortingServiceClient extends $grpc.Client {
+  static final _$sortNumbers = $grpc.ClientMethod<$0.NumberArray, $0.NumberArray>(
+      '/NumberSortingService/SortNumbers',
+      ($0.NumberArray value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.NumberArray.fromBuffer(value));
 
-  MathOperationsClient($grpc.ClientChannel channel,
+  NumberSortingServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.MatrixResponse> matrixMultiply($0.MatrixRequest request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$matrixMultiply, request, options: options);
+  $grpc.ResponseFuture<$0.NumberArray> sortNumbers($0.NumberArray request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$sortNumbers, request, options: options);
   }
 }
 
-@$pb.GrpcServiceName('MathOperations')
-abstract class MathOperationsServiceBase extends $grpc.Service {
-  $core.String get $name => 'MathOperations';
+@$pb.GrpcServiceName('NumberSortingService')
+abstract class NumberSortingServiceBase extends $grpc.Service {
+  $core.String get $name => 'NumberSortingService';
 
-  MathOperationsServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.MatrixRequest, $0.MatrixResponse>(
-        'MatrixMultiply',
-        matrixMultiply_Pre,
+  NumberSortingServiceBase() {
+    $addMethod($grpc.ServiceMethod<$0.NumberArray, $0.NumberArray>(
+        'SortNumbers',
+        sortNumbers_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.MatrixRequest.fromBuffer(value),
-        ($0.MatrixResponse value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $0.NumberArray.fromBuffer(value),
+        ($0.NumberArray value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.MatrixResponse> matrixMultiply_Pre($grpc.ServiceCall call, $async.Future<$0.MatrixRequest> request) async {
-    return matrixMultiply(call, await request);
+  $async.Future<$0.NumberArray> sortNumbers_Pre($grpc.ServiceCall call, $async.Future<$0.NumberArray> request) async {
+    return sortNumbers(call, await request);
   }
 
-  $async.Future<$0.MatrixResponse> matrixMultiply($grpc.ServiceCall call, $0.MatrixRequest request);
+  $async.Future<$0.NumberArray> sortNumbers($grpc.ServiceCall call, $0.NumberArray request);
 }

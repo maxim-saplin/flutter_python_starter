@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app/grpc_generated/client.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,6 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAppState extends State<MainApp> {
-  // Generate an array of 40 random integers
   List<int> randomIntegers =
       List.generate(40, (index) => Random().nextInt(100));
 
@@ -39,7 +39,25 @@ class MainAppState extends State<MainApp> {
                         List.generate(40, (index) => Random().nextInt(100));
                   });
                 },
+                style: ElevatedButton.styleFrom(
+                  minimumSize:
+                      const Size(140, 36), // Set minimum width to 120px
+                ),
                 child: const Text('Regenerate List'),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    //randomIntegers.sort(); // Sort the array
+                    //client.
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize:
+                      const Size(140, 36), // Set minimum width to 120px
+                ),
+                child: const Text('Sort'),
               ),
             ],
           ),

@@ -26,6 +26,25 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+if [[ -z "$proto" ]]; then
+    echo "Error: Missing required parameter '--proto'"
+    exit 1
+fi
+
+if [[ -z "$flutterDir" ]]; then
+    echo "Error: Missing required parameter '--flutterDir'"
+    exit 1
+fi
+
+if [[ -z "$pythonDir" ]]; then
+    echo "Error: Missing required parameter '--pythonDir'"
+    exit 1
+fi
+
+# Convert flutterDir and pythonDir to absolute paths
+flutterDir=$(realpath "$flutterDir")
+pythonDir=$(realpath "$pythonDir")
+
 serviceName=$(basename "$proto" .proto)
 
 # echo "proto: $proto"
@@ -44,19 +63,31 @@ pip3 install grpcio-tools
 pip3 install tinyaes
 pip3 install pyinstaller
 
+
+workingDir=$(dirname "$(realpath "$0")")
+protoDir=$(dirname "$proto")
+protoFile=$(basename "$proto")
+
+# Print the file name with extension
+echo "$fileNameWithExtension"
+
 # Generate Dart code
 mkdir -p $flutterDir/lib/grpc_generated
-protoc --dart_out=grpc:$flutterDir/lib/grpc_generated $proto
+cd $protoDir # changing dir to avoid created nexted folders in --dart_out beacause of implicitly following grpc namespaces
+protoc --dart_out=grpc:"$flutterDir/lib/grpc_generated" $protoFile
+echo "$(pwd)"
+cd $workingDir
 # Store current working directory to a variable
 
-currentDir=$(pwd)
 cd $flutterDir
 flutter pub add grpc
-cd $currentDir
+cd $workingDir
 
 # Generate Python code
 mkdir -p $pythonDir
-python3 -m grpc_tools.protoc -I. --python_out=$pythonDir --grpc_python_out=$pythonDir $proto
+cd $protoDir # changing dir to avoid created nexted folders in --dart_out beacause of implicitly following grpc namespaces
+python3 -m grpc_tools.protoc -I. --python_out=$pythonDir --grpc_python_out=$pythonDir $protoFile
+cd $workingDir
 
 # Pyhton boilderplate code for running self-hosted gRPC server
 serverpy=$(cat << EOF

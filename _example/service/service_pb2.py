@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rservice.proto\"0\n\rMatrixRequest\x12\x0e\n\x06values\x18\x01 \x03(\x01\x12\x0f\n\x07\x63olumns\x18\x02 \x01(\x05\" \n\x0eMatrixResponse\x12\x0e\n\x06values\x18\x01 \x03(\x01\x32\x45\n\x0eMathOperations\x12\x33\n\x0eMatrixMultiply\x12\x0e.MatrixRequest\x1a\x0f.MatrixResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rservice.proto\"\x1e\n\x0bNumberArray\x12\x0f\n\x07numbers\x18\x01 \x03(\x05\x32\x43\n\x14NumberSortingService\x12+\n\x0bSortNumbers\x12\x0c.NumberArray\x1a\x0c.NumberArray\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -21,10 +21,8 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'service_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _globals['_MATRIXREQUEST']._serialized_start=17
-  _globals['_MATRIXREQUEST']._serialized_end=65
-  _globals['_MATRIXRESPONSE']._serialized_start=67
-  _globals['_MATRIXRESPONSE']._serialized_end=99
-  _globals['_MATHOPERATIONS']._serialized_start=101
-  _globals['_MATHOPERATIONS']._serialized_end=170
+  _globals['_NUMBERARRAY']._serialized_start=17
+  _globals['_NUMBERARRAY']._serialized_end=47
+  _globals['_NUMBERSORTINGSERVICE']._serialized_start=49
+  _globals['_NUMBERSORTINGSERVICE']._serialized_end=116
 # @@protoc_insertion_point(module_scope)

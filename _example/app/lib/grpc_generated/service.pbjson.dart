@@ -13,29 +13,15 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use matrixRequestDescriptor instead')
-const MatrixRequest$json = {
-  '1': 'MatrixRequest',
+@$core.Deprecated('Use numberArrayDescriptor instead')
+const NumberArray$json = {
+  '1': 'NumberArray',
   '2': [
-    {'1': 'values', '3': 1, '4': 3, '5': 1, '10': 'values'},
-    {'1': 'columns', '3': 2, '4': 1, '5': 5, '10': 'columns'},
+    {'1': 'numbers', '3': 1, '4': 3, '5': 5, '10': 'numbers'},
   ],
 };
 
-/// Descriptor for `MatrixRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List matrixRequestDescriptor = $convert.base64Decode(
-    'Cg1NYXRyaXhSZXF1ZXN0EhYKBnZhbHVlcxgBIAMoAVIGdmFsdWVzEhgKB2NvbHVtbnMYAiABKA'
-    'VSB2NvbHVtbnM=');
-
-@$core.Deprecated('Use matrixResponseDescriptor instead')
-const MatrixResponse$json = {
-  '1': 'MatrixResponse',
-  '2': [
-    {'1': 'values', '3': 1, '4': 3, '5': 1, '10': 'values'},
-  ],
-};
-
-/// Descriptor for `MatrixResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List matrixResponseDescriptor = $convert.base64Decode(
-    'Cg5NYXRyaXhSZXNwb25zZRIWCgZ2YWx1ZXMYASADKAFSBnZhbHVlcw==');
+/// Descriptor for `NumberArray`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List numberArrayDescriptor = $convert.base64Decode(
+    'CgtOdW1iZXJBcnJheRIYCgdudW1iZXJzGAEgAygFUgdudW1iZXJz');
 
