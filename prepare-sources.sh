@@ -51,18 +51,22 @@ serviceName=$(basename "$proto" .proto)
 # echo "flutterDir: $flutterDir"
 # echo "pythonDir: $pythonDir"
 
-# Prepare Dart/Flutter
-brew install protobuf
-dart pub global activate protoc_plugin
-export PATH="$PATH":"$HOME/.pub-cache/bin"
+flagFile=".starterDependenciesInstalled"
+if [ ! -f "$flagFile" ]; then
+    echo "Initializing dependencies"
+    # Prepare Dart/Flutter
+    brew install protobuf
+    dart pub global activate protoc_plugin
+    export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-# Prepare Pyhton dependencies
-# pip3 install -r requirements.txt
-pip3 install grpcio
-pip3 install grpcio-tools
-pip3 install tinyaes
-pip3 install pyinstaller
-
+    # Prepare Pyhton dependencies
+    # pip3 install -r requirements.txt
+    pip3 install grpcio
+    pip3 install grpcio-tools
+    pip3 install tinyaes
+    pip3 install pyinstaller
+    touch "$flagFile"
+fi
 
 workingDir=$(dirname "$(realpath "$0")")
 protoDir=$(dirname "$proto")
