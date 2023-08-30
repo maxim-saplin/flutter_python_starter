@@ -1,6 +1,5 @@
-# Extracting named parameters from Bash script
+set -e # halt on any error
 
-# Initialize variables
 proto=""
 flutterDir=""
 pythonDir=""
