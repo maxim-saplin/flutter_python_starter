@@ -80,7 +80,6 @@ cd $protoDir # changing dir to avoid created nexted folders in --dart_out beacau
 protoc --dart_out=grpc:"$flutterDir/lib/grpc_generated" $protoFile
 echo "$(pwd)"
 cd $workingDir
-# Store current working directory to a variable
 
 cd $flutterDir
 flutter pub add grpc

@@ -3,7 +3,7 @@ from concurrent import futures
 import grpc
 import service_pb2_grpc
 
-from math_operations import MathOperations  
+from number_sorting import NumberSortingService  
 
 def serve():
   DEFAULT_PORT = 50055
@@ -13,7 +13,7 @@ def serve():
 
   server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
-  service_pb2_grpc.add_MathOperationsServicer_to_server(MathOperations(), server)
+  service_pb2_grpc.add_NumberSortingServiceServicer_to_server(NumberSortingService(), server)
 
   server.add_insecure_port(HOST)
   print(f"gRPC server started and listening on {HOST}")

@@ -4,10 +4,14 @@ import 'client_native.dart'
     if (dart.library.io) 'client_native.dart'
     if (dart.library.html) 'client_web.dart';
 
-NumberSortingServiceClient? _client;
+Map<String, NumberSortingServiceClient> _clientMap = {};
 
-NumberSortingServiceClient get client {
-  _client ??= NumberSortingServiceClient(
-      getGrpcClientChannel('127.0.0.1', 50555, false));
-  return _client!;
+/// Lazily creates client, for each host/port pair there's one client created and stored internally
+NumberSortingServiceClient getClient({
+  String host = 'localhost',
+  int port = 50055,
+}) {
+  _clientMap['$host:$port'] ??=
+      NumberSortingServiceClient(getGrpcClientChannel(host, port, false));
+  return _clientMap['$host:$port']!;
 }

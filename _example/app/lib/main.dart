@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:app/grpc_generated/client.dart';
+import 'package:app/grpc_generated/service.pbgrpc.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -48,10 +49,11 @@ class MainAppState extends State<MainApp> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    //randomIntegers.sort(); // Sort the array
-                    //client.
-                  });
+                  //setState(() => randomIntegers.sort());
+                  getClient()
+                      .sortNumbers(NumberArray(numbers: randomIntegers))
+                      .then(
+                          (p0) => setState(() => randomIntegers = p0.numbers));
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize:
