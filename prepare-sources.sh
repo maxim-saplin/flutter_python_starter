@@ -91,7 +91,7 @@ echo "$(pwd)"
 cd $workingDir
 
 cd $flutterDir
-flutter pub add grpc
+flutter pub add grpc || echo "Can't add grpc to Flutter project, continuing..."
 
 # macOS, update entitlements files and disable sandbox
 entitlements_file_1="macos/Runner/DebugProfile.entitlements"
