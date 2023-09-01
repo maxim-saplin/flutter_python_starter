@@ -30,6 +30,11 @@ if [[ -z "$proto" ]]; then
     exit 1
 fi
 
+if [[ ! -f "$proto" ]]; then
+    echo "Error: Protofile '$proto' does not exist"
+    exit 1
+fi
+
 if [[ -z "$flutterDir" ]]; then
     echo "Error: Missing required parameter '--flutterDir'"
     exit 1
@@ -39,6 +44,9 @@ if [[ -z "$pythonDir" ]]; then
     echo "Error: Missing required parameter '--pythonDir'"
     exit 1
 fi
+
+mkdir -p $flutterDir
+mkdir -p $pythonDir
 
 # Convert flutterDir and pythonDir to absolute paths
 flutterDir=$(realpath "$flutterDir")
