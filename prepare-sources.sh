@@ -56,7 +56,6 @@ if [ ! -f "$flagFile" ]; then
     # Prepare Dart/Flutter
     brew install protobuf
     dart pub global activate protoc_plugin
-    export PATH="$PATH":"$HOME/.pub-cache/bin"
 
     # Prepare Pyhton dependencies
     # pip3 install -r requirements.txt
@@ -66,6 +65,8 @@ if [ ! -f "$flagFile" ]; then
     pip3 install pyinstaller
     touch "$flagFile"
 fi
+
+export PATH="$PATH":"$HOME/.pub-cache/bin" # make Dart's protoc_plugin available
 
 workingDir=$(dirname "$(realpath "$0")")
 protoDir=$(dirname "$proto")
@@ -83,6 +84,24 @@ cd $workingDir
 
 cd $flutterDir
 flutter pub add grpc
+
+# macOS, update entitlements files and disable sandbox
+entitlements_file_1="macos/Runner/DebugProfile.entitlements"
+entitlements_file_2="macos/Runner/Release.entitlements"
+
+if [ -f "$entitlements_file_1" ]; then
+    # H;1h;$!d;x; - this part enables whole file processing (rather than line-by-line)
+    entitlements_content=$(echo "$entitlements_content" | sed 'H;1h;$!d;x; s/<key>com\.apple\.security\.app-sandbox<\/key>[[:space:]]*<true\/>/<key>com.apple.security.app-sandbox<\/key>\n\t<false\/>/' "$entitlements_file_1")
+    # echo "$entitlements_content"
+    echo "$entitlements_content" > "$entitlements_file_1"
+fi
+
+if [ -f "$entitlements_file_2" ]; then
+    entitlements_content=$(echo "$entitlements_content" | sed 'H;1h;$!d;x; s/<key>com\.apple\.security\.app-sandbox<\/key>[[:space:]]*<true\/>/<key>com.apple.security.app-sandbox<\/key>\n\t<false\/>/' "$entitlements_file_2")
+    # echo "$entitlements_content"
+    echo "$entitlements_content" > "$entitlements_file_2"
+fi
+
 cd $workingDir
 
 # Generate Python code

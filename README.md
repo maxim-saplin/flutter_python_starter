@@ -50,12 +50,16 @@ What it does is:
   - Installs `protobuf` compiler via brew on macOS
   - Installs and activates `protoc_plugin` for Dart
 2. (Re)creates Dart and Python gRPC client/server bindings and puts the to corresponding folders
-3. Adds `grpc` package to `pubspec.yaml`
+3. Flutter part
+  - Adds `grpc` package to `pubspec.yaml`
+  - Disables sandbox for macOS platform project in order to enable network communication and make gRPC calls possible. For that "macos/Runner/DebugProfile.entitlements" and "macos/Runner/Release.entitlements" files are updated with `com.apple.security.app-sandbox` set to `false`
 4. Creates template `server.py` file that runs self-hosted gRPC server, it needs to be updated to host the actual service
 
 Script parameters:
 - `--proto` - points to gRPC PROTO definition of the service
 - `--flutterDir` - location of Flutter app, .dart stubs will be created at `$flutterDir/lib/grpc_generated`
 - `--pythonDir` - location of Python project
+
+Upon successful completion you'd get `Dart/Flutter and Python bindings have been generated for 'service.proto' definition` message
 
 # Bundling Python
