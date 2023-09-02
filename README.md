@@ -13,7 +13,14 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 2. Manually adding required implementations of gRPC service in Python part (using generated stubs) and using the service via generated Dart client in Flutter part
 3. Building Python part via PyInstaller and bundling it as asset within Flutter project
 
-# Requirements
+# Prerequisites to use starter kit
+
+- Flutter SDK 
+- Python 3.9+ 
+- Chocolately package manager (for Windows)
+
+
+# Requirements fulfilled by the solution
 
 - Python code packed as self-contained binary not dependent on local Python installation
 - Works in Windows, Linux and macOS

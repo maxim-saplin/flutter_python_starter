@@ -79,7 +79,35 @@ flagFile="$protoDir/.starterDependenciesInstalled"
 if [ ! -f "$flagFile" ]; then
     echo "Initializing dependencies"
     # Prepare Dart/Flutter
-    brew install protobuf
+    # Update the installation command for different operating systems
+
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        brew install protobuf
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux
+        sudo apt-get install -y protobuf-compiler
+    elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+        # Windows
+        choco install protoc
+    else
+        echo "Error: Unsupported operating system"
+        exit 1
+    fi
+
+# Continue with the rest of the code...
+
+# Prepare Dart/Flutter
+dart pub global activate protoc_plugin
+dart pub global activate flutter_asset_manager
+
+# Prepare Python dependencies
+$PYTHON -m pip install grpcio
+$PYTHON -m pip install grpcio-tools
+$PYTHON -m pip install tinyaes
+$PYTHON -m pip install pyinstaller
+
+# Rest of the code...
     dart pub global activate protoc_plugin
     dart pub global activate flutter_asset_manager
 
