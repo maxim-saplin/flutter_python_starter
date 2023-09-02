@@ -67,3 +67,5 @@ _example/.DS_Store
 
 .starterDependenciesInstalled
 _example/service/server_py_flutter.spec
+server.build
+.DS_Store
