@@ -87,5 +87,34 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
   - Update `server.py` to host the implemented service
 2. Update Flutter app to use generated Dart client to call the service
   - Update the generated `lib/grpc_generated/client.dart` and put the actual class name of gRPC generated client
+  - Add init to main.dart, e.g.
+  ```Dart
+  Future<void> pyInitResult = Future(() => null);
+
+  void main() {
+    WidgetsFlutterBinding.ensureInitialized();
+    pyInitResult = initPy();
+    runApp(const MainApp());
+  }
+  ```
+  Please not it is suggested to not await init in the main but rather have the app start and let Python start in parallel. Besides, you can handle error in this future later. E.g. you can use FutureBuilder somewhere in the widget tree to display loding spinner and error message
+  - Add Python executable shutdown request in app exit, e.g.:
+  ```Dart
+  class MainAppState extends State<MainApp> with WidgetsBindingObserver {
+    List<int> randomIntegers =
+        List.generate(40, (index) => Random().nextInt(100));
+
+    @override
+    Future<AppExitResponse> didRequestAppExit() {
+      shutdownPyIfAny();
+      return super.didRequestAppExit();
+    }
+
+    @override
+    void initState() {
+      super.initState();
+      WidgetsBinding.instance.addObserver(this);
+    }
+    ```
 
 # 2. Bundling Python
