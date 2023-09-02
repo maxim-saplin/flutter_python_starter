@@ -157,13 +157,21 @@ fi
 if [[ ! -f "$flutterDir/lib/grpc_generated/client.dart" ]]; then
     cp "$workingDir/templates/client.dart" "$flutterDir/lib/grpc_generated/client.dart"
 fi
-
 if [[ ! -f "$flutterDir/lib/grpc_generated/client_native.dart" ]]; then
     cp "$workingDir/templates/client_native.dart" "$flutterDir/lib/grpc_generated/client_native.dart"
 fi
-
 if [[ ! -f "$flutterDir/lib/grpc_generated/client_web.dart" ]]; then
     cp "$workingDir/templates/client_web.dart" "$flutterDir/lib/grpc_generated/client_web.dart"
+fi
+
+if [ ! -f "$flutterDir/lib/grpc_generated/init_py.dart" ]; then
+    cp "$workingDir/templates/init_py.dart" "$flutterDir/lib/grpc_generated/init_py.dart"
+fi
+if [ ! -f "$flutterDir/lib/grpc_generated/init_py_native.dart" ]; then
+    cp "$workingDir/templates/init_py_native.dart" "$flutterDir/lib/grpc_generated/init_py_native.dart"
+fi
+if [ ! -f "$flutterDir/lib/grpc_generated/init_py_web.dart" ]; then
+    cp "$workingDir/templates/init_py_web.dart" "$flutterDir/lib/grpc_generated/init_py_web.dart"
 fi
 
 echo "// !Will be rewriten upon \`prepare sources\` or \`build\` actions by Flutter-Python starter kit" > $flutterDir/lib/grpc_generated/py_file_info.dart
