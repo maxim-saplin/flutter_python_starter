@@ -63,13 +63,17 @@ protoFile=$(basename "$proto")
 
 serviceName=$(basename "$proto" .proto)
 
-# echo "proto: $proto"
-# echo "flutterDir: $flutterDir"
-# echo "pythonDir: $pythonDir"
+# Check the operating system
+OS=$(uname)
 
-# Change to assume the flagFile is stored under protoDir
+# Set the Python interpreter name
+if [[ $OS == "Windows" ]]; then
+  PYTHON=python
+else
+  PYTHON=python3
+fi
 
-# Update the flagFile path to be stored under protoDir
+
 flagFile="$protoDir/.starterDependenciesInstalled"
 
 if [ ! -f "$flagFile" ]; then
@@ -81,10 +85,10 @@ if [ ! -f "$flagFile" ]; then
 
     # Prepare Python dependencies
     # pip3 install -r requirements.txt
-    pip3 install grpcio
-    pip3 install grpcio-tools
-    pip3 install tinyaes
-    pip3 install pyinstaller
+    $PYTHON -m pip install grpcio
+    $PYTHON -m pip install grpcio-tools
+    $PYTHON -m pip install tinyaes
+    $PYTHON -m pip install pyinstaller
     touch "$flagFile"
 fi
 
@@ -144,7 +148,7 @@ cd $workingDir
 # Generate Python code
 mkdir -p $pythonDir
 cd $protoDir # changing dir to avoid created nexted folders in --dart_out beacause of implicitly following grpc namespaces
-python3 -m grpc_tools.protoc -I. --python_out=$pythonDir --grpc_python_out=$pythonDir $protoFile
+$PYTHON -m grpc_tools.protoc -I. --python_out=$pythonDir --grpc_python_out=$pythonDir $protoFile
 cd $workingDir
 
 # Pyhton boilderplate code for running self-hosted gRPC server
