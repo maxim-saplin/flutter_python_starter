@@ -64,3 +64,5 @@ htmlcov/
 # Add Python package cache
 .pycache/
 _example/.DS_Store
+
+.starterDependenciesInstalled
