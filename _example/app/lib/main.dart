@@ -11,7 +11,7 @@ Future<void> pyInitResult = Future(() => null);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  pyInitResult = initPy(true);
+  pyInitResult = initPy();
   runApp(const MainApp());
 }
 

@@ -98,7 +98,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
     runApp(const MainApp());
   }
   ```
-  Please not it is suggested to not await init in the main but rather have the app start and let Python start in parallel. Besides, you can handle error in this future later. E.g. you can use FutureBuilder somewhere in the widget tree to display loding spinner and error message.
+  Please not it is suggested to not await init in the main but rather have the app start and let Python start in parallel. Besides, you can handle error in this future later. E.g. you can use FutureBuilder somewhere in the widget tree to display loading spinner and error message.
   - Add Python executable shutdown request in app exit, e.g.:
   ```Dart
   class MainAppState extends State<MainApp> with WidgetsBindingObserver {
@@ -128,3 +128,8 @@ What it does:
 2. Copes the generated executable into `$flutterDir/assets/` folder
 3. Adds the asset to `pubspec.yaml`
 4. Updates `py_file_info.dart` with the name and version of the bundled Python executable
+
+# 4. To Do
+1. Propper management of /assets
+  - [ ] Handle situation when there're already assets defined in pubspec.yaml
+  - [ ] When building for a specific platform make sure to remove assets from other platforms to save room

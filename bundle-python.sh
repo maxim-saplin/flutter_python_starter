@@ -36,11 +36,11 @@ OS=$(uname)
 
 # Check the OS
 if [[ $OS == "Windows" ]]; then
-    exeName="${exeName}_win"
+    exeNameFull="${exeName}_win"
 elif [[ $OS == "Darwin" ]]; then
-    exeName="${exeName}_osx"
+    exeNameFull="${exeName}_osx"
 else
-    exeName="${exeName}_lnx"
+    exeNameFull="${exeName}_lnx"
 fi
 
 cd $pythonDir
@@ -52,21 +52,16 @@ fi
 cd $workingDir
 
 if [[ $OS == "Windows" ]]; then
-    exeName="$exeName.exe"
+    exeNameFull="$exeName.exe"
 fi
 
 mkdir -p $flutterDir/assets/
-cp $pythonDir/dist/$exeName $flutterDir/assets/
-
-if [[ $OS == "Windows" ]]; then
-    exeName="${exeName%.exe}"
-fi
-
+cp $pythonDir/dist/$exeNameFull $flutterDir/assets/
 
 # Check if assets already exists in pubspec.yaml
 if ! grep -q "assets:" "$flutterDir"/pubspec.yaml; then
-    echo "assets:" >> "$flutterDir"/pubspec.yaml
-    echo "  - assets/" >> "$flutterDir"/pubspec.yaml
+    echo "  assets:" >> "$flutterDir"/pubspec.yaml
+    echo "    - assets/" >> "$flutterDir"/pubspec.yaml
 fi
 
 # Get current date time and create a string of the following format '2023_09_02_10_24_56'
@@ -81,3 +76,5 @@ mv "$flutterDir"/lib/grpc_generated/py_file_info_temp.dart "$flutterDir"/lib/grp
 
 echo "const exeFileName = '$exeName';" >> "$flutterDir"/lib/grpc_generated/py_file_info.dart
 echo "const currentFileVersionFromAssets = '$currentDateTime';" >> "$flutterDir"/lib/grpc_generated/py_file_info.dart
+
+echo -e "\e[32m\n Python built and put to "$flutterDir"/assets/$exeNameFull"

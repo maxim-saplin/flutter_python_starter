@@ -45,14 +45,14 @@ Future<String> _prepareExecutable(String directory) async {
 
   if (!file.existsSync()) {
     ByteData pyExe =
-        await PlatformAssetBundle().load('/assets/${_getAssetName()}');
+        await PlatformAssetBundle().load('assets/${_getAssetName()}');
     await _writeFile(file, pyExe, versionFile);
   } else {
     // Check version file and asset sizes, version in the file and the constant
     // If they do not match or the version file does not exist, update the executable and version file
     var versionMismatch = false;
     ByteData pyExe =
-        await PlatformAssetBundle().load('/assets/${_getAssetName()}');
+        await PlatformAssetBundle().load('assets/${_getAssetName()}');
     var loadedBinarySize = pyExe.buffer.lengthInBytes;
     var currentBinarySize = await file.length();
     if (loadedBinarySize != currentBinarySize) {
@@ -78,7 +78,9 @@ Future<String> _prepareExecutable(String directory) async {
 }
 
 Future<void> _writeFile(File file, ByteData pyExe, File versionFile) async {
-  await file.delete();
+  if (file.existsSync()) {
+    file.deleteSync();
+  }
   await file.create(recursive: true);
   await file.writeAsBytes(pyExe.buffer.asUint8List());
   await versionFile.writeAsString(currentFileVersionFromAssets);
