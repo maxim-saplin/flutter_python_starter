@@ -3,8 +3,10 @@ set -e # halt on any error
 proto=""
 flutterDir=""
 pythonDir=""
+exeName="server_py_flutter"
 
 # Loop through command line arguments
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --proto)
@@ -17,6 +19,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --pythonDir)
             pythonDir="$2"
+            shift 2
+            ;;
+        --exeName)
+            exeName="$2"
             shift 2
             ;;
         *)
@@ -91,7 +97,10 @@ echo "$(pwd)"
 cd $workingDir
 
 cd $flutterDir
-flutter pub add grpc || echo "Can't add grpc to Flutter project, continuing..."
+flutter pub add grpc || echo "Can't add `grpc` to Flutter project, continuing..."
+flutter pub add protobuf || echo "Can't add `protobuf` to Flutter project, continuing..."
+flutter pub add path_provider || echo "Can't add 'path_provider' to Flutter project, continuing..."
+flutter pub add path || echo "Can't add 'path' to Flutter project, continuing..."
 
 # macOS, update entitlements files and disable sandbox
 entitlements_file_1="macos/Runner/DebugProfile.entitlements"
@@ -100,15 +109,31 @@ entitlements_file_2="macos/Runner/Release.entitlements"
 if [ -f "$entitlements_file_1" ]; then
     # H;1h;$!d;x; - this part enables whole file processing (rather than line-by-line)
     entitlements_content=$(echo "$entitlements_content" | sed 'H;1h;$!d;x; s/<key>com\.apple\.security\.app-sandbox<\/key>[[:space:]]*<true\/>/<key>com.apple.security.app-sandbox<\/key>\n\t<false\/>/' "$entitlements_file_1")
-    # echo "$entitlements_content"
     echo "$entitlements_content" > "$entitlements_file_1"
 fi
 
 if [ -f "$entitlements_file_2" ]; then
     entitlements_content=$(echo "$entitlements_content" | sed 'H;1h;$!d;x; s/<key>com\.apple\.security\.app-sandbox<\/key>[[:space:]]*<true\/>/<key>com.apple.security.app-sandbox<\/key>\n\t<false\/>/' "$entitlements_file_2")
-    # echo "$entitlements_content"
     echo "$entitlements_content" > "$entitlements_file_2"
 fi
+
+# Dart clients
+if [[ ! -f "$flutterDir/lib/grpc_generated/client.dart" ]]; then
+    cp "$workingDir/templates/client.dart" "$flutterDir/lib/grpc_generated/client.dart"
+fi
+
+if [[ ! -f "$flutterDir/lib/grpc_generated/client_native.dart" ]]; then
+    cp "$workingDir/templates/client_native.dart" "$flutterDir/lib/grpc_generated/client_native.dart"
+fi
+
+if [[ ! -f "$flutterDir/lib/grpc_generated/client_web.dart" ]]; then
+    cp "$workingDir/templates/client_web.dart" "$flutterDir/lib/grpc_generated/client_web.dart"
+fi
+
+echo "// !Will be rewriten upon \`prepare sources\` or \`build\` actions by Flutter-Python starter kit" > $flutterDir/lib/grpc_generated/py_file_info.dart
+echo "const versionFileName = 'server_py_version.txt';" >> $flutterDir/lib/grpc_generated/py_file_info.dart
+echo "const exeFileName = '$exeName';" >> $flutterDir/lib/grpc_generated/py_file_info.dart
+echo "const currentFileVersionFromAssets = '';" >> $flutterDir/lib/grpc_generated/py_file_info.dart
 
 cd $workingDir
 

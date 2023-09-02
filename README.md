@@ -29,7 +29,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
 
-# Preparing Sources
+# 1. Preparing Sources
 
 ## 1. Preparing Flutter and Python projects
 
@@ -51,15 +51,25 @@ What it does is:
   - Installs and activates `protoc_plugin` for Dart
 2. (Re)creates Dart and Python gRPC client/server bindings and puts the to corresponding folders
 3. Flutter part
-  - Adds `grpc` package to `pubspec.yaml`
+  - Adds `grpc`, `protobuf`, `path`, `path_provider` packages to `pubspec.yaml`
   - Disables sandbox for macOS platform project in order to enable network communication and make gRPC calls possible. For that "macos/Runner/DebugProfile.entitlements" and "macos/Runner/Release.entitlements" files are updated with `com.apple.security.app-sandbox` set to `false`
+  - Creates client.dart, client_native.dart and client_web.dart files that wrap gRPC client instantiation for different platforms
 4. Creates template `server.py` file that runs self-hosted gRPC server, it needs to be updated to host the actual service
 
 Script parameters:
 - `--proto` - points to gRPC PROTO definition of the service
 - `--flutterDir` - location of Flutter app, .dart stubs will be created at `$flutterDir/lib/grpc_generated`
 - `--pythonDir` - location of Python project
+- `--exeName` (optional) - name of the executable to build Python app into using PyInstaller, defaults to 'server_py_flutter'. Must be unique enough since server lifecycle management logic will be using the name to kill any processes with the name on app close (or start - to garbage collect).
 
 Upon successful completion you'd get `Dart/Flutter and Python bindings have been generated for 'service.proto' definition` message
 
-# Bundling Python
+# 2. Manual steps
+
+1. Implement the actual service in Python module 
+  - Implement the service using generated stubs
+  - Update `server.py` to host the implemented service
+2. Update Flutter app to use generated Dart client to call the service
+  - Update the generated `lib/grpc_generated/client.dart` and put the actual class name of gRPC generated client
+
+# 2. Bundling Python

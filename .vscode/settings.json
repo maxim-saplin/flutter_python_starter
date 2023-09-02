@@ -10,5 +10,8 @@
     "python.analysis.ignore": [
         "templates"
     ],
+    "dart.analysisExcludedFolders": [
+        "templates"
+    ],
 
 }
