@@ -50,11 +50,19 @@ What it does is:
   - Installs `protobuf` compiler via brew on macOS
   - Installs and activates `protoc_plugin` for Dart
   - Creates `.starterDependenciesInstalled` file next to proto file just to keep tract of the fact that dependencies have been installed and do not repeat the heavy process again
-2. (Re)creates Dart and Python gRPC client/server bindings and puts the to corresponding folders
+2. (Re)creates Dart and Python gRPC client/server bindings and puts the to corresponding folders (`lib/grpc_generated` for Flutter and Python root)
 3. Flutter part
   - Adds `grpc`, `protobuf`, `path`, `path_provider` packages to `pubspec.yaml`
   - Disables sandbox for macOS platform project in order to enable network communication and make gRPC calls possible. For that "macos/Runner/DebugProfile.entitlements" and "macos/Runner/Release.entitlements" files are updated with `com.apple.security.app-sandbox` set to `false`
-  - Creates client.dart, client_native.dart and client_web.dart files that wrap gRPC client instantiation for different platforms
+  - Creates client helpers `client.dart`, `client_native.dart` and `client_web.dart` files that wrap gRPC client instantiation for different platforms
+    - `client.dart` needs to be updated manually after creation
+    - Generation done once
+  - Creates helpers to init and run Python executable from the assets
+    - `init_py.dart`, `init_py_native.dart` and `init_py_web.dart`
+    - Generation done once
+  - Creates `py_file_info.dart` defining Python executable name and it's version that is currently stored in the assets
+    - Regenereated/rewritten on each source prate and build
+
 4. Creates template `server.py` file that runs self-hosted gRPC server, it needs to be updated to host the actual service
 
 Script parameters:
