@@ -52,7 +52,7 @@ This is the service definition to be implemented by Python and used by Flutter c
 
 ## 3. Dart and Python boilerplate
 
-Run `zsh prepare-sources.sh --proto ./service.proto --flutterDir ./app --pythonDir ./service` in terminal.
+Run `zsh prepare-sources.sh --proto ./service.proto --flutterDir ./app --pythonDir ./server` in terminal.
 
 What it does is:
 1. Installs all dependencies:
@@ -123,7 +123,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
 
 # 3. Bundling Python
 
-Run `zsh bundle-python.sh --flutterDir ./app --pythonDir ./service` in terminal. You can pass `--nuitka` flag to use Nuitka compiler instead of PyInstaller. It can provide better performance at a cost of lower stability.
+Run `zsh bundle-python.sh --flutterDir ./app --pythonDir ./server` in terminal. You can pass `--nuitka` flag to use Nuitka compiler instead of PyInstaller. It can provide better performance at a cost of lower stability.
 
 What it does:
 1. Builds `server.py` via PyInstaller into a single executable file using the name defined in `--exeName` parameter (defaults to 'server_py_flutter')

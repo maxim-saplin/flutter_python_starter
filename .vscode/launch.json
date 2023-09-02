@@ -10,9 +10,9 @@
             "name": "prepare-sources",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/prepare-sources.sh",
-            "args": ["--proto", "./_example/service.proto", 
-                    "--flutterDir", "./_example/app",
-                    "--pythonDir", "./_example/service"]
+            "args": ["--proto", "./example_1/service.proto", 
+                    "--flutterDir", "./example_1/app",
+                    "--pythonDir", "./example_1/server"]
         },
         {
             "type": "zshdb",
@@ -20,26 +20,26 @@
             "name": "bundle-python",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/bundle-python.sh",
-            "args": ["--proto", "./_example/service.proto", 
-                    "--flutterDir", "./_example/app",
-                    "--pythonDir", "./_example/service"]
+            "args": ["--proto", "./example_1/service.proto", 
+                    "--flutterDir", "./example_1/app",
+                    "--pythonDir", "./example_1/server"]
         },
         {
             "name": "app",
-            "cwd": "_example/app",
+            "cwd": "example_1/app",
             "request": "launch",
             "type": "dart",
         },
         {
             "name": "app (profile mode)",
-            "cwd": "_example/app",
+            "cwd": "example_1/app",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "app (release mode)",
-            "cwd": "_example/app",
+            "cwd": "example_1/app",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
