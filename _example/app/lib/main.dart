@@ -72,7 +72,12 @@ class MainAppState extends State<MainApp> with WidgetsBindingObserver {
                       return Text('Error: ${snapshot.error}');
                     } else {
                       // When future completes, display a message saying that Python has been loaded
-                      return const Text('Python has been loaded');
+                      return const Text(
+                        'Python has been loaded',
+                        style: TextStyle(
+                          color: Colors.green,
+                        ),
+                      );
                     }
                   },
                 ),
