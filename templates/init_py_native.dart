@@ -40,18 +40,19 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
 }
 
 Future<String> _prepareExecutable(String directory) async {
-  var exe = (defaultTargetPlatform == TargetPlatform.windows ? '.exe' : '');
-  var file = File(p.join(directory, '$exeFileName$exe'));
+  var file = File(p.join(directory, _getAssetName()));
   var versionFile = File(p.join(directory, versionFileName));
 
   if (!file.existsSync()) {
-    ByteData pyExe = await PlatformAssetBundle().load('/assets/file$exe');
+    ByteData pyExe =
+        await PlatformAssetBundle().load('/assets/${_getAssetName()}');
     await _writeFile(file, pyExe, versionFile);
   } else {
     // Check version file and asset sizes, version in the file and the constant
     // If they do not match or the version file does not exist, update the executable and version file
     var versionMismatch = false;
-    ByteData pyExe = await PlatformAssetBundle().load('/assets/file$exe');
+    ByteData pyExe =
+        await PlatformAssetBundle().load('/assets/${_getAssetName()}');
     var loadedBinarySize = pyExe.buffer.lengthInBytes;
     var currentBinarySize = await file.length();
     if (loadedBinarySize != currentBinarySize) {
@@ -85,8 +86,7 @@ Future<void> _writeFile(File file, ByteData pyExe, File versionFile) async {
 
 /// Searches for any processes that match Python server and kills those
 Future<void> shutdownPyIfAny() async {
-  var exe = (defaultTargetPlatform == TargetPlatform.windows ? '.exe' : '');
-  var name = '$exeFileName$exe';
+  var name = _getAssetName();
 
   switch (defaultTargetPlatform) {
     case TargetPlatform.linux:
@@ -99,4 +99,17 @@ Future<void> shutdownPyIfAny() async {
     default:
       break;
   }
+}
+
+String _getAssetName() {
+  var name = '';
+
+  if (defaultTargetPlatform == TargetPlatform.windows) {
+    name += '${exeFileName}_win.exe';
+  } else if (defaultTargetPlatform == TargetPlatform.macOS) {
+    name += '${exeFileName}_osx';
+  } else if (defaultTargetPlatform == TargetPlatform.linux) {
+    name += '${exeFileName}_lnx';
+  }
+  return name;
 }

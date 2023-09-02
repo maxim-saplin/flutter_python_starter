@@ -7,9 +7,19 @@
         {
             "type": "zshdb",
             "request": "launch",
-            "name": "Zsh-Debug (hardcoded script name)",
+            "name": "prepare-sources",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/prepare-sources.sh",
+            "args": ["--proto", "./_example/service.proto", 
+                    "--flutterDir", "./_example/app",
+                    "--pythonDir", "./_example/service"]
+        },
+        {
+            "type": "zshdb",
+            "request": "launch",
+            "name": "bundle-python",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/bundle-python.sh",
             "args": ["--proto", "./_example/service.proto", 
                     "--flutterDir", "./_example/app",
                     "--pythonDir", "./_example/service"]

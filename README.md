@@ -20,7 +20,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - Chocolately package manager (for Windows)
 
 
-# Requirements fulfilled by the solution
+# Requirements fulfilled
 
 - Python code packed as self-contained binary not dependent on local Python installation
 - Works in Windows, Linux and macOS
@@ -34,6 +34,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 
 # Considerations
 
+- No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
 
 # 1. Preparing Sources
@@ -76,7 +77,7 @@ Script parameters:
 - `--proto` - points to gRPC PROTO definition of the service
 - `--flutterDir` - location of Flutter app, .dart stubs will be created at `$flutterDir/lib/grpc_generated`
 - `--pythonDir` - location of Python project
-- `--exeName` (optional) - name of the executable to build Python app into using PyInstaller, defaults to 'server_py_flutter'. Must be unique enough since server lifecycle management logic will be using the name to kill any processes with the name on app close (or start - to garbage collect).
+- `--exeName` (optional) - name of the executable to build Python app into using PyInstaller, defaults to 'server_py_flutter'. Must be unique enough since server lifecycle management logic will be using the name to kill any processes with the name on app close (or start - to garbage collect). When building '_win', '_osx' and '_lnx' postfixes are added automatically based on platform.
 
 Upon successful completion you'd get `Dart/Flutter and Python bindings have been generated for 'service.proto' definition` message
 
@@ -117,4 +118,13 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
     }
     ```
 
-# 2. Bundling Python
+# 3. Bundling Python
+
+Run `zsh bundle-python.sh --flutterDir ./app --pythonDir ./service` in terminal.
+
+What it does:
+1. Builds `server.py` via PyInstaller into a single executable file using the name defined in `--exeName` parameter (defaults to 'server_py_flutter')
+  - '_win', '_osx' and '_lnx' postfixes are added automatically to `--exeName` based on the platform.
+2. Copes the generated executable into `$flutterDir/assets/` folder
+3. Adds the asset to `pubspec.yaml`
+4. Updates `py_file_info.dart` with the name and version of the bundled Python executable

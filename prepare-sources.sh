@@ -55,15 +55,14 @@ mkdir -p $flutterDir
 mkdir -p $pythonDir
 
 # Convert flutterDir and pythonDir to absolute paths
-flutterDir=$(realpath "$flutterDir")
-pythonDir=$(realpath "$pythonDir")
+flutterDir=$(realpath "$flutterDir" | sed 's/\/$//')
+pythonDir=$(realpath "$pythonDir" | sed 's/\/$//')
 workingDir=$(dirname "$(realpath "$0")")
-protoDir=$(dirname "$proto")
+protoDir=$(dirname "$proto" | sed 's/\/$//')
 protoFile=$(basename "$proto")
 
 serviceName=$(basename "$proto" .proto)
 
-# Check the operating system
 OS=$(uname)
 
 # Set the Python interpreter name
@@ -95,21 +94,9 @@ if [ ! -f "$flagFile" ]; then
         exit 1
     fi
 
-# Continue with the rest of the code...
 
-# Prepare Dart/Flutter
-dart pub global activate protoc_plugin
-dart pub global activate flutter_asset_manager
-
-# Prepare Python dependencies
-$PYTHON -m pip install grpcio
-$PYTHON -m pip install grpcio-tools
-$PYTHON -m pip install tinyaes
-$PYTHON -m pip install pyinstaller
-
-# Rest of the code...
-    dart pub global activate protoc_plugin
-    dart pub global activate flutter_asset_manager
+    # Prepare Dart/Flutter
+    flutter pub global activate protoc_plugin
 
     # Prepare Python dependencies
     # pip3 install -r requirements.txt
