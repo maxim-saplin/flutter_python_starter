@@ -47,6 +47,37 @@ class MainAppState extends State<MainApp> with WidgetsBindingObserver {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 50,
+                child:
+                    // Add FutureBuilder that awaits pyInitResult
+                    FutureBuilder<void>(
+                  future: pyInitResult,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Stack(
+                        children: [
+                          SizedBox(height: 4, child: LinearProgressIndicator()),
+                          Positioned.fill(
+                            child: Center(
+                              child: Text(
+                                'Loading Python...',
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      // If error is returned by the future, display an error message
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      // When future completes, display a message saying that Python has been loaded
+                      return const Text('Python has been loaded');
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(height: 16),
               Text(
                 randomIntegers.join(', '),
                 textAlign: TextAlign.center,

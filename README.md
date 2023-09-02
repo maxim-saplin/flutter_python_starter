@@ -130,6 +130,7 @@ What it does:
 4. Updates `py_file_info.dart` with the name and version of the bundled Python executable
 
 # 4. To Do
-1. Propper management of /assets
+1. Proper management of /assets
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
   - [ ] When building for a specific platform make sure to remove assets from other platforms to save room
+  - [ ] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any
