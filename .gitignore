@@ -68,4 +68,6 @@ _example/.DS_Store
 .starterDependenciesInstalled
 _example/service/server_py_flutter.spec
 server.build
+server.dist
+server.onefile-build
 .DS_Store

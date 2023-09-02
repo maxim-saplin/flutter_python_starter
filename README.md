@@ -18,6 +18,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - Flutter SDK 
 - Python 3.9+ 
 - Chocolately package manager (for Windows)
+- If using Nuitka with macOS, official recent release must be installed (https://www.python.org/downloads/macos/), Apple's version of Pyhton coming with macOS won't work 
 
 
 # Requirements fulfilled
@@ -27,6 +28,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - Flutter UI and Python module run in separate OS processes
 - gRPC for communication between Flutter and Python
 - PyInstaller builds Python into console app that hosts gRPC service
+  - As experimental feature can use Nuitka to buildnu standalone binary (smaller and faster)
 - Flutter app carries the built Python binary as asset
 - Flutter app manages lifecycle of Python process (starts and kills it), caches the binary (doesn't extract it on each launch), can support versioning and substitute extracted Python with a newer version from assets
   - Timestamp is used for versioning, i.e. date time of PyInstaller execution is used as binary version
@@ -36,6 +38,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 
 - No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
+- Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
 
 # 1. Preparing Sources
 
@@ -120,7 +123,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
 
 # 3. Bundling Python
 
-Run `zsh bundle-python.sh --flutterDir ./app --pythonDir ./service` in terminal.
+Run `zsh bundle-python.sh --flutterDir ./app --pythonDir ./service` in terminal. You can pass `--nuitka` flag to use Nuitka compiler instead of PyInstaller. It can provide better performance at a cost of lower stability.
 
 What it does:
 1. Builds `server.py` via PyInstaller into a single executable file using the name defined in `--exeName` parameter (defaults to 'server_py_flutter')
@@ -134,3 +137,4 @@ What it does:
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
   - [ ] When building for a specific platform make sure to remove assets from other platforms to save room
   - [ ] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any
+  - [ ] Fix multi instance (currently next instance kills old server)

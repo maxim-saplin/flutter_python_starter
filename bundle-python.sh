@@ -3,6 +3,7 @@ set -e # halt on any error
 flutterDir=""
 pythonDir=""
 exeName="server_py_flutter"
+nuitka=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -21,6 +22,10 @@ while [[ $# -gt 0 ]]; do
         --exeName)
             exeName="$2"
             shift 2
+            ;;
+        --nuitka)  # Set `nuitka` to `true` if there's a flag `--nuitka`
+            nuitka=true
+            shift
             ;;
         *)
             shift
@@ -44,10 +49,19 @@ else
 fi
 
 cd $pythonDir
-if [[ $OS == "Windows" ]]; then
-   python -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name=$exeName server.py
+if [[ $nuitka == true ]]; then
+    if [[ $OS == "Windows" ]]; then
+        python3 -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
+    else
+        python3 -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
+    fi
+    #mv "$exeFile" /dist
 else
-   python3 -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --strip --name=$exeName server.py  
+    if [[ $OS == "Windows" ]]; then
+        python -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name=$exeName server.py
+    else
+        python3 -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --strip --name=$exeName server.py
+    fi
 fi
 cd $workingDir
 
