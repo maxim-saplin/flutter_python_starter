@@ -5,8 +5,6 @@ flutterDir=""
 pythonDir=""
 exeName="server_py_flutter"
 
-# Loop through command line arguments
-
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --proto)
@@ -30,3 +28,11 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+OS=$(uname)
+
+if [[ $OS == "Windows" ]]; then
+    python -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --key=MySuperSecretPassword --name=$exeName server.py
+else
+   python3 -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --key=MySuperSecretPassword --strip --name=$exeName server.py  
+fi

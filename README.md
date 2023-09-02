@@ -97,7 +97,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
     runApp(const MainApp());
   }
   ```
-  Please not it is suggested to not await init in the main but rather have the app start and let Python start in parallel. Besides, you can handle error in this future later. E.g. you can use FutureBuilder somewhere in the widget tree to display loding spinner and error message
+  Please not it is suggested to not await init in the main but rather have the app start and let Python start in parallel. Besides, you can handle error in this future later. E.g. you can use FutureBuilder somewhere in the widget tree to display loding spinner and error message.
   - Add Python executable shutdown request in app exit, e.g.:
   ```Dart
   class MainAppState extends State<MainApp> with WidgetsBindingObserver {
