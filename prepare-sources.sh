@@ -57,6 +57,9 @@ mkdir -p $pythonDir
 # Convert flutterDir and pythonDir to absolute paths
 flutterDir=$(realpath "$flutterDir")
 pythonDir=$(realpath "$pythonDir")
+workingDir=$(dirname "$(realpath "$0")")
+protoDir=$(dirname "$proto")
+protoFile=$(basename "$proto")
 
 serviceName=$(basename "$proto" .proto)
 
@@ -64,14 +67,19 @@ serviceName=$(basename "$proto" .proto)
 # echo "flutterDir: $flutterDir"
 # echo "pythonDir: $pythonDir"
 
-flagFile=".starterDependenciesInstalled"
+# Change to assume the flagFile is stored under protoDir
+
+# Update the flagFile path to be stored under protoDir
+flagFile="$protoDir/.starterDependenciesInstalled"
+
 if [ ! -f "$flagFile" ]; then
     echo "Initializing dependencies"
     # Prepare Dart/Flutter
     brew install protobuf
     dart pub global activate protoc_plugin
+    dart pub global activate flutter_asset_manager
 
-    # Prepare Pyhton dependencies
+    # Prepare Python dependencies
     # pip3 install -r requirements.txt
     pip3 install grpcio
     pip3 install grpcio-tools
@@ -81,10 +89,6 @@ if [ ! -f "$flagFile" ]; then
 fi
 
 export PATH="$PATH":"$HOME/.pub-cache/bin" # make Dart's protoc_plugin available
-
-workingDir=$(dirname "$(realpath "$0")")
-protoDir=$(dirname "$proto")
-protoFile=$(basename "$proto")
 
 # Print the file name with extension
 echo "$fileNameWithExtension"

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+service NumberSortingService {
+  rpc SortNumbers (NumberArray) returns (NumberArray) {}
+}
+
+message NumberArray {
+  repeated int32 numbers = 1;
+}

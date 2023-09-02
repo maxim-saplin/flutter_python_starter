@@ -49,6 +49,7 @@ What it does is:
   - PyInstaller to build Python as self-contained executable: `tinyaes`, `pyinstaller`
   - Installs `protobuf` compiler via brew on macOS
   - Installs and activates `protoc_plugin` for Dart
+  - Creates `.starterDependenciesInstalled` file next to proto file just to keep tract of the fact that dependencies have been installed and do not repeat the heavy process again
 2. (Re)creates Dart and Python gRPC client/server bindings and puts the to corresponding folders
 3. Flutter part
   - Adds `grpc`, `protobuf`, `path`, `path_provider` packages to `pubspec.yaml`
