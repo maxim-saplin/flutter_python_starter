@@ -71,3 +71,4 @@ server.build
 server.dist
 server.onefile-build
 .DS_Store
+example_1/server/server_py_flutter_osx.spec
