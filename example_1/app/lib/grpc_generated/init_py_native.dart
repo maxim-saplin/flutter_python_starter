@@ -24,7 +24,8 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
   if (defaultTargetPlatform == TargetPlatform.macOS) {
     await Process.run("chmod", ["u+x", filePath]);
   }
-  await Process.start(filePath, [port.toString()]);
+  await Process.start(filePath, [port.toString()],
+      runInShell: defaultTargetPlatform == TargetPlatform.linux ? true : false);
 
   // Wait for the server executable to start..
   var serverStarted = false;

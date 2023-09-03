@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e # halt on any error
 #set -x
 
@@ -78,6 +79,7 @@ flagFile="$protoDir/.starterDependenciesInstalled"
 
 if [ ! -f "$flagFile" ]; then
     echo "Initializing dependencies"
+    echo "$OSTYPE"
     # Prepare Dart/Flutter
     # Update the installation command for different operating systems
 
@@ -86,7 +88,8 @@ if [ ! -f "$flagFile" ]; then
         brew install protobuf
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         # Linux
-        sudo apt-get install -y protobuf-compiler
+        sudo apt install protobuf-compiler
+        sudo apt install python3-pip
     elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
         # Windows
         choco install protoc
@@ -186,8 +189,8 @@ if [ ! -f "$pythonDir/server.py" ]; then
 echo "${serverpy//\$\{serviceName\}/$serviceName}" > "$pythonDir/server.py"
 fi
 
-if [ ! -f "$pythonDir/requirements.txt" ]; then
-echo "grpcio" > "$pythonDir/requirements.txt"
+if ! grep -q "^grpcio" "$pythonDir/requirements.txt"; then
+  echo -e "\ngrpcio" >> "$pythonDir/requirements.txt"
 fi
 
 echo -e "\e[32m\nDart/Flutter and Python bindings have been generated for '$proto' definition"
