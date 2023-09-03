@@ -159,3 +159,8 @@ What it does:
   - [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
   - [ ] Fix multi instance launch (currently next instance kills old server)
   - [ ] Slow Python startup when launching Flutter app
+  - [ ] Awating error code on init, see if can be done faster
+     ```dart
+      // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
+      await Future.delayed(const Duration(seconds: 2));
+     ```
