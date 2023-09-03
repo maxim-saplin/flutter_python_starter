@@ -1,4 +1,5 @@
 set -e # halt on any error
+set -x
 
 proto=""
 flutterDir=""
@@ -64,11 +65,10 @@ protoFile=$(basename "$proto")
 
 serviceName=$(basename "$proto" .proto)
 
-OS=$(uname)
-
 # Set the Python interpreter name
-if [[ $OS == "Windows" ]]; then
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
   PYTHON=python
+  grpcGeneratedDir=$(cygpath -w "$grpcGeneratedDir")
 else
   PYTHON=python3
 fi
