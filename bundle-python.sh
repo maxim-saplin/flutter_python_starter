@@ -45,7 +45,7 @@ else
 fi
 
 # Check the OS
-if  [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
     exeNameFull="${exeName}_win"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     exeNameFull="${exeName}_osx"
@@ -58,12 +58,11 @@ if [[ $nuitka == true ]]; then
     $PYTHON -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
 else
     $PYTHON -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name="$exeNameFull" server.py
-
 fi
 cd $workingDir
 
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
-    exeNameFull="$exeName.exe"
+    exeNameFull="$exeNameFull.exe"
 fi
 
 mkdir -p $flutterDir/assets/

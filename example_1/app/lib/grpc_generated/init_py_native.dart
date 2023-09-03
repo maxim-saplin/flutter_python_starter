@@ -13,7 +13,7 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
 
   // Ask OS to provide a free port if port is null and host is localhost
   if (port == null && host == "localhost") {
-    var serverSocket = await ServerSocket.bind(InternetAddress.anyIPv4, 0);
+    var serverSocket = await ServerSocket.bind(InternetAddress.loopbackIPv4, 0);
     port = serverSocket.port;
     serverSocket.close();
     defaultPort = port;
