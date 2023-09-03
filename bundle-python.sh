@@ -1,5 +1,5 @@
 set -e # halt on any error
-set -x
+#set -x
 
 flutterDir=""
 pythonDir=""
@@ -57,7 +57,7 @@ cd $pythonDir
 if [[ $nuitka == true ]]; then
     $PYTHON -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
 else
-    $PYTHON -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name=$exeName server.py
+    $PYTHON -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name="$exeNameFull" server.py
 
 fi
 cd $workingDir
