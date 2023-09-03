@@ -42,7 +42,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
 - Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
- - As of Sept 2023 Python 3.11.5 + Nuitka, example_1 works on macOS and Windows. On Linux not tested.
+  - As of Sept 2023 Python 3.11 + Nuitka 1.8, example_1 works on macOS and Windows. On Linux binary throws error when starting.
 - Linux - only Ubuntu was tested
 
 # 1. Preparing Sources
