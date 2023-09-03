@@ -1,5 +1,5 @@
 set -e # halt on any error
-set -x
+#set -x
 
 proto=""
 flutterDir=""

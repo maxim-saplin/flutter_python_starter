@@ -1,4 +1,5 @@
 set -e # halt on any error
+set -x
 
 flutterDir=""
 pythonDir=""
@@ -37,12 +38,16 @@ flutterDir=$(realpath "$flutterDir" | sed 's/\/$//')
 pythonDir=$(realpath "$pythonDir" | sed 's/\/$//')
 workingDir=$(dirname "$(realpath "$0")")
 
-OS=$(uname)
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+  PYTHON=python
+else
+  PYTHON=python3
+fi
 
 # Check the OS
-if [[ $OS == "Windows" ]]; then
+if  [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
     exeNameFull="${exeName}_win"
-elif [[ $OS == "Darwin" ]]; then
+elif [[ "$OSTYPE" == "darwin"* ]]; then
     exeNameFull="${exeName}_osx"
 else
     exeNameFull="${exeName}_lnx"
@@ -50,22 +55,14 @@ fi
 
 cd $pythonDir
 if [[ $nuitka == true ]]; then
-    if [[ $OS == "Windows" ]]; then
-        python3 -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
-    else
-        python3 -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
-    fi
-    #mv "$exeFile" /dist
+    $PYTHON -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
 else
-    if [[ $OS == "Windows" ]]; then
-        python -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name=$exeName server.py
-    else
-        python3 -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --strip --name=$exeName server.py
-    fi
+    $PYTHON -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name=$exeName server.py
+
 fi
 cd $workingDir
 
-if [[ $OS == "Windows" ]]; then
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
     exeNameFull="$exeName.exe"
 fi
 
