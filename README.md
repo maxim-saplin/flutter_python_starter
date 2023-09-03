@@ -30,7 +30,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - Flutter UI and Python module run in separate OS processes
 - gRPC for communication between Flutter and Python
 - PyInstaller builds Python into console app that hosts gRPC service
-  - As experimental feature can use Nuitka to buildng standalone binary (smaller and faster)
+  - As experimental feature can use Nuitka to building standalone binary (smaller and faster)
 - The app can request a free port from OS and ask the server to start listening on this port
 - Flutter app carries the built Python binary as asset
 - Flutter app manages lifecycle of Python process (starts and kills it), caches the binary (doesn't extract it on each launch), can support versioning and substitute extracted Python with a newer version from assets
@@ -42,6 +42,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
 - Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
+ - As of Sept 2023 Python 3.11.5 + Nuitka, example_1 works on macOS and Windows. On Linux not tested.
 - Linux - only Ubuntu was tested
 
 # 1. Preparing Sources
@@ -157,3 +158,4 @@ What it does:
   - [ ] When building for a specific platform make sure to remove assets from other platforms to save room
   - [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
   - [ ] Fix multi instance launch (currently next instance kills old server)
+  - [ ] Slow Python startup when launching Flutter app
