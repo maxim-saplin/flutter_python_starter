@@ -48,11 +48,8 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
   // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
   await Future.delayed(const Duration(seconds: 2));
   if (exiCodeReuturned) {
-    throw 'Failure while starting server process. It stopped right after starting';
-  }
-  if (exiCodeReuturned) {
     serverStarted = false;
-    throw 'Failure while starting server process. It stopped right after starting';
+    throw 'Failure while launching server process. It stopped right after starting';
   }
 }
 
