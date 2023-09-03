@@ -53,6 +53,8 @@ else
     exeNameFull="${exeName}_lnx"
 fi
 
+$PYTHON -m pip install -r $pythonDir/requirements.txt
+
 cd $pythonDir
 if [[ $nuitka == true ]]; then
     $PYTHON -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
