@@ -59,6 +59,7 @@ flutterDir=$(realpath "$flutterDir" | sed 's/\/$//')
 pythonDir=$(realpath "$pythonDir" | sed 's/\/$//')
 workingDir=$(dirname "$(realpath "$0")")
 protoDir=$(dirname "$proto" | sed 's/\/$//')
+grpcGeneratedDir=$flutterDir/lib/grpc_generated
 protoFile=$(basename "$proto")
 
 serviceName=$(basename "$proto" .proto)
@@ -104,6 +105,7 @@ if [ ! -f "$flagFile" ]; then
     $PYTHON -m pip install grpcio-tools
     $PYTHON -m pip install tinyaes
     $PYTHON -m pip install pyinstaller
+    $PYTHON -m pip install nuitka
     touch "$flagFile"
 fi
 
@@ -113,9 +115,9 @@ export PATH="$PATH":"$HOME/.pub-cache/bin" # make Dart's protoc_plugin available
 echo "$fileNameWithExtension"
 
 # Generate Dart code
-mkdir -p $flutterDir/lib/grpc_generated
+mkdir -p $grpcGeneratedDir
 cd $protoDir # changing dir to avoid created nexted folders in --dart_out beacause of implicitly following grpc namespaces
-protoc --dart_out=grpc:"$flutterDir/lib/grpc_generated" $protoFile
+protoc --dart_out=grpc:"$grpcGeneratedDir" $protoFile
 echo "$(pwd)"
 cd $workingDir
 
@@ -141,30 +143,30 @@ if [ -f "$entitlements_file_2" ]; then
 fi
 
 # Dart clients
-if [[ ! -f "$flutterDir/lib/grpc_generated/client.dart" ]]; then
-    cp "$workingDir/templates/client.dart" "$flutterDir/lib/grpc_generated/client.dart"
+if [[ ! -f "$grpcGeneratedDir/client.dart" ]]; then
+    cp "$workingDir/templates/client.dart" "$grpcGeneratedDir/client.dart"
 fi
-if [[ ! -f "$flutterDir/lib/grpc_generated/client_native.dart" ]]; then
-    cp "$workingDir/templates/client_native.dart" "$flutterDir/lib/grpc_generated/client_native.dart"
+if [[ ! -f "$grpcGeneratedDir/client_native.dart" ]]; then
+    cp "$workingDir/templates/client_native.dart" "$grpcGeneratedDir/client_native.dart"
 fi
-if [[ ! -f "$flutterDir/lib/grpc_generated/client_web.dart" ]]; then
-    cp "$workingDir/templates/client_web.dart" "$flutterDir/lib/grpc_generated/client_web.dart"
-fi
-
-if [ ! -f "$flutterDir/lib/grpc_generated/init_py.dart" ]; then
-    cp "$workingDir/templates/init_py.dart" "$flutterDir/lib/grpc_generated/init_py.dart"
-fi
-if [ ! -f "$flutterDir/lib/grpc_generated/init_py_native.dart" ]; then
-    cp "$workingDir/templates/init_py_native.dart" "$flutterDir/lib/grpc_generated/init_py_native.dart"
-fi
-if [ ! -f "$flutterDir/lib/grpc_generated/init_py_web.dart" ]; then
-    cp "$workingDir/templates/init_py_web.dart" "$flutterDir/lib/grpc_generated/init_py_web.dart"
+if [[ ! -f "$grpcGeneratedDir/client_web.dart" ]]; then
+    cp "$workingDir/templates/client_web.dart" "$grpcGeneratedDir/client_web.dart"
 fi
 
-echo "// !Will be rewriten upon \`prepare sources\` or \`build\` actions by Flutter-Python starter kit" > $flutterDir/lib/grpc_generated/py_file_info.dart
-echo "const versionFileName = 'server_py_version.txt';" >> $flutterDir/lib/grpc_generated/py_file_info.dart
-echo "const exeFileName = '$exeName';" >> $flutterDir/lib/grpc_generated/py_file_info.dart
-echo "const currentFileVersionFromAssets = '';" >> $flutterDir/lib/grpc_generated/py_file_info.dart
+if [ ! -f "$grpcGeneratedDir/init_py.dart" ]; then
+    cp "$workingDir/templates/init_py.dart" "$grpcGeneratedDir/init_py.dart"
+fi
+if [ ! -f "$grpcGeneratedDir/init_py_native.dart" ]; then
+    cp "$workingDir/templates/init_py_native.dart" "$grpcGeneratedDir/init_py_native.dart"
+fi
+if [ ! -f "$grpcGeneratedDir/init_py_web.dart" ]; then
+    cp "$workingDir/templates/init_py_web.dart" "$grpcGeneratedDir/init_py_web.dart"
+fi
+
+echo "// !Will be rewriten upon \`prepare sources\` or \`build\` actions by Flutter-Python starter kit" > $grpcGeneratedDir/py_file_info.dart
+echo "const versionFileName = 'server_py_version.txt';" >> $grpcGeneratedDir/py_file_info.dart
+echo "const exeFileName = '$exeName';" >> $grpcGeneratedDir/py_file_info.dart
+echo "const currentFileVersionFromAssets = '';" >> $grpcGeneratedDir/py_file_info.dart
 
 cd $workingDir
 

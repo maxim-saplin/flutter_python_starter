@@ -18,6 +18,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - Flutter SDK 
 - Python 3.9+ 
 - Chocolately package manager (for Windows)
+- Git Bash terminal (for Windows) - install Git for Windows and Git Bash will be setup
 - If using Nuitka with macOS, official recent release must be installed (https://www.python.org/downloads/macos/), Apple's version of Pyhton coming with macOS won't work 
 
 
@@ -52,7 +53,10 @@ This is the service definition to be implemented by Python and used by Flutter c
 
 ## 3. Dart and Python boilerplate
 
-Run `zsh prepare-sources.sh --proto ./service.proto --flutterDir ./app --pythonDir ./server` in terminal.
+Run `./prepare-sources.sh --proto ./service.proto --flutterDir ./app --pythonDir ./server` in terminal. 
+For Windows:
+ - Use Git Bash
+ - For the first run (when dependencies are created) you will need admin right for the shell (run as Administrator Bash or VSCode)
 
 What it does is:
 1. Installs all dependencies:
@@ -123,7 +127,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
 
 # 3. Bundling Python
 
-Run `zsh bundle-python.sh --flutterDir ./app --pythonDir ./server` in terminal. You can pass `--nuitka` flag to use Nuitka compiler instead of PyInstaller. It can provide better performance at a cost of lower stability.
+Run `./bundle-python.sh --flutterDir ./app --pythonDir ./server` in terminal. You can pass `--nuitka` flag to use Nuitka compiler instead of PyInstaller. It can provide better performance at a cost of lower stability.
 
 What it does:
 1. Builds `server.py` via PyInstaller into a single executable file using the name defined in `--exeName` parameter (defaults to 'server_py_flutter')
