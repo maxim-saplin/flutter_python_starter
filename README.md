@@ -19,7 +19,8 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - Python 3.9+ 
 - Chocolately package manager (for Windows)
 - Git Bash terminal (for Windows) - install Git for Windows and Git Bash will be setup
-- If using Nuitka with macOS, official recent release must be installed (https://www.python.org/downloads/macos/), Apple's version of Pyhton coming with macOS won't work 
+- If using Nuitka with macOS and Windows, official recent release must be installed (https://www.python.org/downloads/macos/), Apple and Windows store version of Pyhton won't work
+ - After installing on Windows you'll have to manually add Python to PATH system environment variable
 
 
 # Requirements fulfilled
@@ -29,7 +30,8 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - Flutter UI and Python module run in separate OS processes
 - gRPC for communication between Flutter and Python
 - PyInstaller builds Python into console app that hosts gRPC service
-  - As experimental feature can use Nuitka to buildnu standalone binary (smaller and faster)
+  - As experimental feature can use Nuitka to buildng standalone binary (smaller and faster)
+- The app can request a free port from OS and ask the server to start listening on this port
 - Flutter app carries the built Python binary as asset
 - Flutter app manages lifecycle of Python process (starts and kills it), caches the binary (doesn't extract it on each launch), can support versioning and substitute extracted Python with a newer version from assets
   - Timestamp is used for versioning, i.e. date time of PyInstaller execution is used as binary version
@@ -40,6 +42,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
 - Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
+- Linux - only Ubuntu was tested
 
 # 1. Preparing Sources
 
@@ -54,15 +57,20 @@ This is the service definition to be implemented by Python and used by Flutter c
 ## 3. Dart and Python boilerplate
 
 Run `./prepare-sources.sh --proto ./service.proto --flutterDir ./app --pythonDir ./server` in terminal. 
-For Windows:
+
+On Windows:
  - Use Git Bash
  - For the first run (when dependencies are created) you will need admin right for the shell (run as Administrator Bash or VSCode)
+
+ On Linux:
+ - Use `bash ./prepare-sources.sh --proto ./service.proto --flutterDir ./app --pythonDir ./server`
 
 What it does is:
 1. Installs all dependencies:
   - gRPC tools to generate Python bindings from .proto file: `grpcio`, `grpcio-tools`
   - PyInstaller to build Python as self-contained executable: `tinyaes`, `pyinstaller`
-  - Installs `protobuf` compiler via brew on macOS
+  - Installs `protobuf` compiler
+    - On Ubuntu installs `pip`
   - Installs and activates `protoc_plugin` for Dart
   - Creates `.starterDependenciesInstalled` file next to proto file just to keep tract of the fact that dependencies have been installed and do not repeat the heavy process again
 2. (Re)creates Dart and Python gRPC client/server bindings and puts the to corresponding folders (`lib/grpc_generated` for Flutter and Python root)
@@ -129,6 +137,13 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
 
 Run `./bundle-python.sh --flutterDir ./app --pythonDir ./server` in terminal. You can pass `--nuitka` flag to use Nuitka compiler instead of PyInstaller. It can provide better performance at a cost of lower stability.
 
+On Windows:
+ - Use Git Bash
+
+ On Linux:
+ - Use `./bundle-python.sh --flutterDir ./app --pythonDir ./server`
+ - Be ready to enter sudo password when `protoc` compiler will be installed via `apt`
+
 What it does:
 1. Builds `server.py` via PyInstaller into a single executable file using the name defined in `--exeName` parameter (defaults to 'server_py_flutter')
   - '_win', '_osx' and '_lnx' postfixes are added automatically to `--exeName` based on the platform.
@@ -140,5 +155,5 @@ What it does:
 1. Proper management of /assets
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
   - [ ] When building for a specific platform make sure to remove assets from other platforms to save room
-  - [ ] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any
-  - [ ] Fix multi instance (currently next instance kills old server)
+  - [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
+  - [ ] Fix multi instance launch (currently next instance kills old server)
