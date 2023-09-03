@@ -21,16 +21,16 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
 
   shutdownPyIfAny();
 
-  if (defaultTargetPlatform == TargetPlatform.macOS) {
+  if (defaultTargetPlatform == TargetPlatform.macOS ||
+      defaultTargetPlatform == TargetPlatform.linux) {
     await Process.run("chmod", ["u+x", filePath]);
   }
-  var p = await Process.start(filePath, [port.toString()],
-      runInShell: defaultTargetPlatform == TargetPlatform.linux ? true : false);
+  var p = await Process.start(filePath, [port.toString()]);
 
-  bool exiCodeReuturned = false;
+  int? exitCode;
 
-  p.exitCode.whenComplete(() {
-    exiCodeReuturned = true;
+  p.exitCode.then((v) {
+    exitCode = v;
   });
 
   // Wait for the server executable to respond..
@@ -47,9 +47,9 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
   }
   // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
   await Future.delayed(const Duration(seconds: 2));
-  if (exiCodeReuturned) {
+  if (exitCode != null) {
     serverStarted = false;
-    throw 'Failure while launching server process. It stopped right after starting';
+    throw 'Failure while launching server process. It stopped right after starting. Exit code: $exitCode';
   }
 }
 
