@@ -159,6 +159,12 @@ What it does:
  - You can decide certain client to use remote server always
  - For simplicity with VSCode you can create a separate `launch.json` config and use --dart-define to set this flag (see example)
  - You can run server via debugger (or without via `python3 server.py`) and also start Flutter app, they both will be using localhost:50055
+ 2. Tp easily test the gRPC server you can run it with python and use `grpcurl` or `evans` command line client, e.g.
+  ```bash
+  evans service.proto --port 50055
+  call SortNumbers
+  1, 2, 3 -> Ctrl+D
+  ```
 
 # 5. To Do
 
