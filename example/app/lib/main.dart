@@ -11,9 +11,8 @@ Future<void> pyInitResult = Future(() => null);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  pyInitResult = initPy(
-      const String.fromEnvironment('useRemote', defaultValue: 'false') ==
-          'true');
+  pyInitResult = initPy();
+
   runApp(const MainApp());
 }
 
@@ -50,6 +49,26 @@ class MainAppState extends State<MainApp> with WidgetsBindingObserver {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text.rich(
+                TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Using ',
+                    ),
+                    TextSpan(
+                      text: '$defaultHost:$defaultPort',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text:
+                          ', ${localPyStartSkipped ? 'skipped launching local server' : 'launched local server'}',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
               SizedBox(
                 height: 50,
                 child:

@@ -1,17 +1,18 @@
-Starter kit for integrating Flutter and Python
+Starter kit for integrating Flutter and Python.
 
-- prepare-sources.sh
-- /templates
-- README.md
 
-A sample of integrated app is available under `_example` folder
+
+A sample of integrated app is available under `example` folder
 
 # How To
 
-It is assumed that there're 2 folders that contain Flutter and Python projects. There're 3 stages:
+It is assumed that there're 2 folders that contain Flutter and Python projects. 
+
+There're 4 steps:
 1. Preparing sources via `prepare-sources.sh` script
 2. Manually adding required implementations of gRPC service in Python part (using generated stubs) and using the service via generated Dart client in Flutter part
 3. Building Python part via PyInstaller and bundling it as asset within Flutter project
+4. Debugging
 
 # Prerequisites to use starter kit
 
@@ -152,19 +153,30 @@ What it does:
 3. Adds the asset to `pubspec.yaml`
 4. Updates `py_file_info.dart` with the name and version of the bundled Python executable
 
-# 4. Notes
+When building Flutter app you can override host and port via --dart-define, e.g.: 
+`flutter build macos --dart-define port=8080 --dart-define host=ajax.com`
+This is needed when building Web and mobile clients to allow using remote server.
 
-1. You can skip running bundled server and expect the app to connect to local server. You can pass in true to `Future<void> initPy([bool doNoStartPy = false])`
- - Building and bundling Python can be slow, you can't debug that way.
- - You can decide certain client to use remote server always
- - For simplicity with VSCode you can create a separate `launch.json` config and use --dart-define to set this flag (see example)
- - You can run server via debugger (or without via `python3 server.py`) and also start Flutter app, they both will be using localhost:50055
- 2. Tp easily test the gRPC server you can run it with python and use `grpcurl` or `evans` command line client, e.g.
+# 4. Debugging
+
+1. You can skip running server from Flutter assets and have the app to connect to local server. You can pass in true to `Future<void> initPy([bool doNoStartPy = false])` OR  create a separate `launch.json` config and use --dart-define to set this flag (see example). E.g. the following config is automatically recognized via initPy():
+            ```          
+              "toolArgs": [
+                "--dart-define",
+                "useRemote=true",
+              ]```
+  - You can run server via debugger (or without via `python3 server.py`) and  start Flutter app, they both will be using `localhost:50055` by default
+  - Building and bundling Python executable can be slow
+
+ 2. To easily test the gRPC server you can run it with python and use `grpcurl` or `evans` command line client, e.g.
   ```bash
   evans service.proto --port 50055
   call SortNumbers
   1, 2, 3 -> Ctrl+D
   ```
+3. To test gRPC Web locally you can use gRPC-Web-Proxy binary like that:
+ `./grpcwebproxy-v0.15.0-osx-x86_64 --backend_addr=localhost:50055 --backend_tls_noverify --allow_all_origins`
+ Binaries can be downloaded from here: https://github.com/improbable-eng/grpc-web/releases - note that they are not signed and on Mac you will need to check Security settings and allow it to run
 
 # 5. To Do
 
@@ -179,3 +191,5 @@ What it does:
       // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
       await Future.delayed(const Duration(seconds: 2));
      ```
+6. [ ] Look into singing (App, Mac) and distribution flow for binaries
+7. Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
