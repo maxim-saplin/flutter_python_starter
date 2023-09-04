@@ -42,7 +42,7 @@ It is assumed that there're 2 folders that contain Flutter and Python projects. 
 - No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
 - Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
-  - As of Sept 2023 Python 3.11 + Nuitka 1.8, example_1 works on macOS and Windows. On Linux binary throws error when starting.
+  - As of Sept 2023 Python 3.11 + Nuitka 1.8, example works on macOS and Windows. On Linux binary throws error when starting.
 - Linux - only Ubuntu was tested
 
 # 1. Preparing Sources
@@ -152,14 +152,23 @@ What it does:
 3. Adds the asset to `pubspec.yaml`
 4. Updates `py_file_info.dart` with the name and version of the bundled Python executable
 
-# 4. To Do
-1. Proper management of /assets
+# 4. Notes
+
+1. You can skip running bundled server and expect the app to connect to local server. You can pass in true to `Future<void> initPy([bool doNoStartPy = false])`
+ - Building and bundling Python can be slow, you can't debug that way.
+ - You can decide certain client to use remote server always
+ - For simplicity with VSCode you can create a separate `launch.json` config and use --dart-define to set this flag (see example)
+ - You can run server via debugger (or without via `python3 server.py`) and also start Flutter app, they both will be using localhost:50055
+
+# 5. To Do
+
+1.[ ]  Proper management of /assets
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
   - [ ] When building for a specific platform make sure to remove assets from other platforms to save room
-  - [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
-  - [ ] Fix multi instance launch (currently next instance kills old server)
-  - [ ] Slow Python startup when launching Flutter app
-  - [ ] Awating error code on init, see if can be done faster
+2. [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
+3. [ ] Fix multi instance launch (currently next instance kills old server)
+4. [ ] Slow Python startup when launching Flutter app
+5. [ ] Awaiting error code on init, see if can be done faster
      ```dart
       // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
       await Future.delayed(const Duration(seconds: 2));

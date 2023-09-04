@@ -11,7 +11,9 @@ Future<void> pyInitResult = Future(() => null);
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  pyInitResult = initPy();
+  pyInitResult = initPy(
+      const String.fromEnvironment('useRemote', defaultValue: 'false') ==
+          'true');
   runApp(const MainApp());
 }
 
@@ -44,6 +46,7 @@ class MainAppState extends State<MainApp> with WidgetsBindingObserver {
       home: Scaffold(
         body: Container(
           padding: const EdgeInsets.all(20),
+          alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

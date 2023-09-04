@@ -10,9 +10,9 @@
             "name": "prepare-sources",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/prepare-sources.sh",
-            "args": ["--proto", "./example_1/service.proto", 
-                    "--flutterDir", "./example_1/app",
-                    "--pythonDir", "./example_1/server"]
+            "args": ["--proto", "./example/service.proto", 
+                    "--flutterDir", "./example/app",
+                    "--pythonDir", "./example/server"]
         },
         {
             "type": "zshdb",
@@ -20,26 +20,37 @@
             "name": "bundle-python",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/bundle-python.sh",
-            "args": ["--proto", "./example_1/service.proto", 
-                    "--flutterDir", "./example_1/app",
-                    "--pythonDir", "./example_1/server"]
+            "args": ["--proto", "./example/service.proto", 
+                    "--flutterDir", "./example/app",
+                    "--pythonDir", "./example/server"]
         },
+        // For some reasons when launching not from the Flutter folder toolArgs is not respected
+        // {
+        //     "name": "app (remote server)",
+        //     "cwd": "example/app",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "toolArgs": [
+        //         "--dart-define",
+        //         "useRemote=true",
+        //       ]
+        // },
         {
             "name": "app",
-            "cwd": "example_1/app",
+            "cwd": "example/app",
             "request": "launch",
             "type": "dart",
         },
         {
             "name": "app (profile mode)",
-            "cwd": "example_1/app",
+            "cwd": "example/app",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "app (release mode)",
-            "cwd": "example_1/app",
+            "cwd": "example/app",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
