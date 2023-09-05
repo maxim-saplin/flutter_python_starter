@@ -135,6 +135,14 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
       WidgetsBinding.instance.addObserver(this);
     }
    ```
+  3. For iOS, to let the app connect to remote gRPC server, in ios/Runner/Info.plist add this
+    ```
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
+    ```
 
 # 3. Bundling Python
 
@@ -178,6 +186,8 @@ This is needed when building Web and mobile clients to allow using remote server
 3. To test gRPC Web locally you can use gRPC-Web-Proxy binary like that:
  `./grpcwebproxy-v0.15.0-osx-x86_64 --backend_addr=localhost:50055 --backend_tls_noverify --allow_all_origins`
  Binaries can be downloaded from here: https://github.com/improbable-eng/grpc-web/releases - note that they are not signed and on Mac you will need to check Security settings and allow it to run
+
+ 4. When playing with servers (built binary or started via python interpreter) watch out for running the server on one port multiple times. If you 
 
 # 5. To Do
 
