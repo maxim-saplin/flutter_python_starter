@@ -1,0 +1,10 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "startServer",
+            "type": "shell",
+            "command": "python3 ../server/server.py & ../grpcwebproxy-v0.15.0-osx-x86_64 --backend_addr=localhost:50055 --run_tls_server=false --allow_all_origins &",
+        }
+    ],
+  }

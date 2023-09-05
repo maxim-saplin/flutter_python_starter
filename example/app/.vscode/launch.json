@@ -4,7 +4,51 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
+        {
+            "name": "web app (remote server)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-d",
+                "chrome",
+                //"--web-browser-flag",
+                //"--disable-web-security"
+            ],
+            "toolArgs": [
+                "--dart-define",
+                "useRemote=true",
+                "--dart-define",
+                "port=8080",
+              ]
+        },
+        {
+            "name": "web app (remote server, auto start)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-d",
+                "chrome",
+                //"--web-browser-flag",
+                //"--disable-web-security"
+            ],
+            "toolArgs": [
+                "--dart-define",
+                "useRemote=true",
+                "--dart-define",
+                "port=8080",
+              ],
+            "preLaunchTask": "startServer"
+        },
+        {
+            "name": "app (remote server, auto start)",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "useRemote=true",
+              ],
+            "preLaunchTask": "startServer"
+        },
         {
             "name": "app (remote server)",
             "request": "launch",

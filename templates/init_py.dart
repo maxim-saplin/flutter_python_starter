@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'client.dart';
 import 'init_py_native.dart'
     if (dart.library.io) 'init_py_native.dart'
@@ -7,11 +9,14 @@ bool localPyStartSkipped = false;
 
 /// Set [doNotStartPy] to `true` if you would like to use remote server
 Future<void> initPy([bool doNoStartPy = false]) async {
+  // Hack to get access to --dart-define values in the web https://stackoverflow.com/questions/65647090/access-dart-define-environment-variables-inside-index-html
+  if (kIsWeb) {
+    initPyImpl();
+  }
   var flag = const String.fromEnvironment('useRemote', defaultValue: 'false') ==
       'true';
   if (doNoStartPy || flag) {
     localPyStartSkipped = true;
-    return Future(() => null);
   }
 
   var hostOverride = const String.fromEnvironment('host', defaultValue: '');
@@ -24,5 +29,5 @@ Future<void> initPy([bool doNoStartPy = false]) async {
   if (portOverride != null) {
     defaultPort = portOverride;
   }
-  return initPyImpl();
+  return localPyStartSkipped ? Future(() => null) : initPyImpl();
 }
