@@ -193,4 +193,6 @@ This is needed when building Web and mobile clients to allow using remote server
       await Future.delayed(const Duration(seconds: 2));
      ```
 6. [ ] Look into singing (App, Mac) and distribution flow for binaries
-7. Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
+7. [ ] Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
+8. [ ] Authenticationflow
+    - [ ] Authenticaltion in the web with JWT passed in server-side cookie via web proxy
