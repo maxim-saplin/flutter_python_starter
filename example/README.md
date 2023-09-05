@@ -2,6 +2,8 @@ A sample of integrating Flutter Desktop Apps with Python by wrapping Python func
 
 The app sends int array to Python, has is sorted and received back.
 
+<img width="545" alt="image" src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/565f103d-d440-4eab-80c7-3d5b6901d972">
+
 For convenience there 5 VSCode launch configurations in /app folder (Flutter project):
 - web app (remote server) - use to run Web Client, doesn't do anything about Python server, expects that you will start gRPC server and gRPC Web Proxy which is listening at 8080
 - web app (remote server, auto start) - use to run Web Client, starts server/server.py and launches gRPC Web Proxy on 8080 using `./grpcwebproxy-v0.15.0-osx-x86_64` (other OS's can be found here https://github.com/improbable-eng/grpc-web/releases)
