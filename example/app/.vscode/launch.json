@@ -37,7 +37,8 @@
                 "--dart-define",
                 "port=8080",
               ],
-            "preLaunchTask": "startServer"
+              "preLaunchTask": "start server",
+              "postDebugTask": "stop server"
         },
         {
             "name": "app (remote server, auto start)",
@@ -47,7 +48,8 @@
                 "--dart-define",
                 "useRemote=true",
               ],
-            "preLaunchTask": "startServer"
+              "preLaunchTask": "start server",
+              "postDebugTask": "stop server"
         },
         {
             "name": "app (remote server)",

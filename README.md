@@ -196,7 +196,7 @@ This is needed when building Web and mobile clients to allow using remote server
  `./grpcwebproxy-v0.15.0-osx-x86_64 --backend_addr=localhost:50055 --backend_tls_noverify --allow_all_origins`
  Binaries can be downloaded from here: https://github.com/improbable-eng/grpc-web/releases - note that they are not signed and on Mac you will need to check Security settings and allow it to run
 
- 4. When playing with servers (built binary or started via python interpreter) watch out for running the server on one port multiple times. If you 
+ 4. When playing with servers (built binary or started via python interpreter) watch out for running the server on one port multiple times. You might get errors. You can use the following command to kill processes used by default by this starter kit: `kill -9 $(lsof -ti:50055,8080)`      
 
 # 5 Remote server, Android and iOS client, Web client and gRPC Proxy
 
@@ -225,5 +225,6 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
      ```
 6. [ ] Look into singing (App, Mac) and distribution flow for binaries
 7. [ ] Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
-8. [ ] Authenticationflow
+8. [ ] Authentication flow
     - [ ] Authenticaltion in the web with JWT passed in server-side cookie via web proxy
+9. [ ] Tailor ./example launch.json for 3 platfroms
