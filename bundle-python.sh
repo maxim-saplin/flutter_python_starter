@@ -57,6 +57,7 @@ $PYTHON -m pip install -r $pythonDir/requirements.txt
 
 cd $pythonDir
 if [[ $nuitka == true ]]; then
+    export PYTHONPATH="./grpc_generated"
     $PYTHON -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
 else
     $PYTHON -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name="$exeNameFull" --paths="./grpc_generated" server.py
@@ -89,4 +90,4 @@ mv "$flutterDir"/lib/grpc_generated/py_file_info_temp.dart "$flutterDir"/lib/grp
 echo "const exeFileName = '$exeName';" >> "$flutterDir"/lib/grpc_generated/py_file_info.dart
 echo "const currentFileVersionFromAssets = '$currentDateTime';" >> "$flutterDir"/lib/grpc_generated/py_file_info.dart
 
-echo -e "\e[32m\n Python built and put to "$flutterDir"/assets/$exeNameFull"
+echo -e "\e[32m\nPython built and put to $flutterDir/assets/$exeNameFull"

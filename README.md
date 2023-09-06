@@ -223,13 +223,13 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
 2. [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
 3. [ ] Fix multi instance launch (currently next instance kills old server)
 4. [ ] Slow Python startup when launching Flutter app
-5. [ ] Awaiting error code on init, see if can be done faster
+5. [x] Awaiting error code on init, see if can be done faster
      ```dart
       // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
       await Future.delayed(const Duration(seconds: 2));
      ```
 6. [ ] Look into singing (App, Mac) and distribution flow for binaries
-7. [ ] Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
+7. [x] Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
 8. [ ] Authentication flow
     - [ ] Authentication in the web with JWT passed in server-side cookie via web proxy
 9. [ ] Tailor ./example launch.json for 3 platforms
