@@ -1,7 +1,7 @@
 from concurrent import futures
 import numpy as np
-import service_pb2_grpc
-import service_pb2
+from grpc_generated import service_pb2_grpc
+from grpc_generated import service_pb2
 
 class NumberSortingService(service_pb2_grpc.NumberSortingService):
     def SortNumbers(self, request, context):

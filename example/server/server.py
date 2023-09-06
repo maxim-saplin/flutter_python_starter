@@ -1,8 +1,9 @@
 import sys
 from concurrent import futures 
 import grpc
-import service_pb2_grpc
-
+# TODO, import generated gRPC stubs
+from grpc_generated import service_pb2_grpc
+# TODO, import yor service implementation
 from number_sorting import NumberSortingService  
 
 def serve():
@@ -13,6 +14,7 @@ def serve():
 
   server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
+  # TODO, add your gRPC service to self-hosted server, e.g.
   service_pb2_grpc.add_NumberSortingServiceServicer_to_server(NumberSortingService(), server)
 
   server.add_insecure_port(HOST)

@@ -175,9 +175,11 @@ cd $workingDir
 
 # Generate Python code
 mkdir -p $pythonDir
+mkdir -p $pythonDir/grpc_generated
 cd $protoDir # changing dir to avoid created nexted folders in --dart_out beacause of implicitly following grpc namespaces
-$PYTHON -m grpc_tools.protoc -I. --python_out=$pythonDir --grpc_python_out=$pythonDir $protoFile
+$PYTHON -m grpc_tools.protoc -I. --python_out=$pythonDir/grpc_generated --grpc_python_out=$pythonDir/grpc_generated $protoFile
 cd $workingDir
+cp templates/__init__.py $pythonDir/grpc_generated
 
 # Pyhton boilderplate code for running self-hosted gRPC server
 serverpy=$(cat << EOF

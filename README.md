@@ -6,7 +6,11 @@ A sample of integrated app is available under `example` folder
 
 # How To
 
-It is assumed that there're 2 folders that contain Flutter and Python projects. 
+It is assumed that there're 2 folders that contain Flutter and Python projects. 2 scripts are provided to:
+1. Generate gRPC stubs and Dart/Pyhton scaffolding from .proto file and copy them to Flutter project (`prepare-sources.sh`)
+2. Bundle Python code and dependencies as assets to Flutter project (`bundle-python.sh`)
+
+On mac/Linux, make them runnable: `chmod -x prepare-sources.sh & chmod -x bundle-python.sh prepare-sources.sh `
 
 There're 4 steps:
 1. Preparing sources via `prepare-sources.sh` script
@@ -101,7 +105,11 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
 # 2. Manual steps
 
 1. Implement the actual service in Python module 
-  - Implement the service using generated stubs
+  - Implement the service using generated stubs, add gRPC generated imports with required definitions:
+  ```Python
+  from grpc import service_pb2_grpc
+  from grpc import service_pb2
+  ```
   - Update `server.py` to host the implemented service
 2. Update Flutter app to use generated Dart client to call the service
   - Update the generated `lib/grpc_generated/client.dart` and put the actual class name of gRPC generated client
@@ -135,6 +143,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
       WidgetsBinding.instance.addObserver(this);
     }
    ```
+  
   3. For iOS, to let the app connect to remote gRPC server, in ios/Runner/Info.plist add this
     ```
     <key>NSAppTransportSecurity</key>
@@ -189,7 +198,19 @@ This is needed when building Web and mobile clients to allow using remote server
 
  4. When playing with servers (built binary or started via python interpreter) watch out for running the server on one port multiple times. If you 
 
-# 5. To Do
+# 5 Remote server, Android and iOS client, Web client and gRPC Proxy
+
+You can target any client to use remote server, though it is specifically useful with mobile and Web as they can't bundle standalone Python server.
+
+To do so you have 2 capabilities:
+
+1. `defaultPort` and `defaultHost` variables in the generated `cleint.dart `- these define the defaults for server address. 
+2. You can override them at build/runtime via --dart-define flags, e.g.:
+`flutter build macos --dart-define port=50055 --dart-define host=ajax.com`
+
+Web clients can't work over HTTP2 and require a proxy in front of gRPC server. As of 2023 there's no working in process Python proxy (Sonora doesn't work with Dart client). The 2 options are Envoy suggested by Google and https://github.com/improbable-eng/grpc-web.
+
+# 6. To Do
 
 1.[ ]  Proper management of /assets
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
