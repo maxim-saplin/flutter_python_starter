@@ -42,14 +42,6 @@ There're 4 steps:
   - Timestamp is used for versioning, i.e. date time of PyInstaller execution is used as binary version
 - Compatibility mode with remotely hosted Python module for iOS, Android, macOS
 
-# Considerations
-
-- No cross-compilation, Windows, macOS and Linux are required for the build
-- Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
-- Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
-  - As of Sept 2023 Python 3.11 + Nuitka 1.8, example works on macOS and Windows. On Linux binary throws error when starting.
-- Linux - only Ubuntu was tested
-
 # 1. Preparing Sources
 
 ## 1. Preparing Flutter and Python projects
@@ -112,9 +104,8 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
   ```
   - Update `server.py` to host the implemented service
 2. Update Flutter app to use generated Dart client to call the service
-  - Update the generated `lib/grpc_generated/client.dart` and put the actual class name of gRPC generated client
   - Add init to main.dart, e.g.
-  ```Dart
+  ```dart
   Future<void> pyInitResult = Future(() => null);
 
   void main() {
@@ -126,7 +117,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
 
   Please not it is suggested to not await init in the main but rather have the app start and let Python start in parallel. Besides, you can handle error in this future later. E.g. you can use FutureBuilder somewhere in the widget tree to display loading spinner and error message.
   - Add Python executable shutdown request in app exit, e.g.:
-  ```Dart
+  ```dart
   class MainAppState extends State<MainApp> with WidgetsBindingObserver {
     List<int> randomIntegers =
         List.generate(40, (index) => Random().nextInt(100));
@@ -142,6 +133,10 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
       super.initState();
       WidgetsBinding.instance.addObserver(this);
     }
+   ```
+   - Use gRPC clients that were generated for you and put to ./lib/grpc_generated/*.pdgrpc.dart files. Use `getClientChannel()` method from c`lient.dart` as constructor parameter when creating client:
+   ```dart
+   NumberSortingServiceClient(getClientChannel())
    ```
   
   3. For iOS, to let the app connect to remote gRPC server, in ios/Runner/Info.plist add this
@@ -175,7 +170,7 @@ When building Flutter app you can override host and port via --dart-define, e.g.
 `flutter build macos --dart-define port=8080 --dart-define host=ajax.com`
 This is needed when building Web and mobile clients to allow using remote server.
 
-# 4. Debugging
+# 4. Debugging & troubleshooting
 
 1. You can skip running server from Flutter assets and have the app to connect to local server. You can pass in true to `Future<void> initPy([bool doNoStartPy = false])` OR  create a separate `launch.json` config and use --dart-define to set this flag (see example). E.g. the following config is automatically recognized via initPy():
             ```          
@@ -196,9 +191,11 @@ This is needed when building Web and mobile clients to allow using remote server
  `./grpcwebproxy-v0.15.0-osx-x86_64 --backend_addr=localhost:50055 --backend_tls_noverify --allow_all_origins`
  Binaries can be downloaded from here: https://github.com/improbable-eng/grpc-web/releases - note that they are not signed and on Mac you will need to check Security settings and allow it to run
 
- 4. When playing with servers (built binary or started via python interpreter) watch out for running the server on one port multiple times. You might get errors. You can use the following command to kill processes used by default by this starter kit: `kill -9 $(lsof -ti:50055,8080)`      
+ 4. When playing with servers (built binary or started via python interpreter) watch out for running the server on one port multiple times. You might get errors. You can use the following command to kill processes used by default by this starter kit: `kill -9 $(lsof -ti:50055,8080)`
 
-# 5 Remote server, Android and iOS client, Web client and gRPC Proxy
+ 5. You manually start generated Python binary from Flutter's `./assets` folder to test it for any issues (what if it crashes)
+
+# Remote server, Android and iOS client, Web client and gRPC Proxy
 
 You can target any client to use remote server, though it is specifically useful with mobile and Web as they can't bundle standalone Python server.
 
@@ -209,6 +206,14 @@ To do so you have 2 capabilities:
 `flutter build macos --dart-define port=50055 --dart-define host=ajax.com`
 
 Web clients can't work over HTTP2 and require a proxy in front of gRPC server. As of 2023 there's no working in process Python proxy (Sonora doesn't work with Dart client). The 2 options are Envoy suggested by Google and https://github.com/improbable-eng/grpc-web.
+
+# Considerations
+
+- No cross-compilation, Windows, macOS and Linux are required for the build
+- Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
+- Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
+  - As of Sept 2023 Python 3.11 + Nuitka 1.8, example works on macOS and Windows. On Linux binary throws error when starting.
+- Linux - only Ubuntu was tested
 
 # 6. To Do
 

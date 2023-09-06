@@ -195,4 +195,8 @@ if ! grep -q "^grpcio" "$pythonDir/requirements.txt"; then
   echo -e "\ngrpcio" >> "$pythonDir/requirements.txt"
 fi
 
+if ! grep -q "^grpcio-health-checking" "$pythonDir/requirements.txt"; then
+  echo -e "\ngrpcio-health-checking" >> "$pythonDir/requirements.txt"
+fi
+
 echo -e "\e[32m\nDart/Flutter and Python bindings have been generated for '$proto' definition"

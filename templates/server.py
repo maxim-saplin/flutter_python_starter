@@ -1,6 +1,8 @@
 import sys
 from concurrent import futures 
 import grpc
+from grpc_health.v1 import health_pb2_grpc
+from grpc_health.v1 import health
 # TODO, import generated gRPC stubs
 from grpc_generated import service_pb2_grpc
 # TODO, import yor service implementation
@@ -16,6 +18,7 @@ def serve():
 
   # TODO, add your gRPC service to self-hosted server, e.g.
   service_pb2_grpc.add_NumberSortingServiceServicer_to_server(NumberSortingService(), server)
+  health_pb2_grpc.add_HealthServicer_to_server(health.HealthServicer(), server)
 
   server.add_insecure_port(HOST)
   print(f"gRPC server started and listening on {HOST}")

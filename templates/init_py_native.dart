@@ -33,24 +33,12 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
     exitCode = v;
   });
 
-  // Wait for the server executable to respond..
-  var serverStarted = false;
-  while (!serverStarted) {
-    try {
-      var serverSocket = await ServerSocket.bind(host, port ?? 50055)
-          .timeout(const Duration(seconds: 1));
-
-      serverSocket.close();
-    } catch (error) {
-      serverStarted = true;
-    }
-  }
   // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
-  await Future.delayed(const Duration(seconds: 2));
   if (exitCode != null) {
-    serverStarted = false;
     throw 'Failure while launching server process. It stopped right after starting. Exit code: $exitCode';
   }
+
+  return Future.delayed(const Duration(seconds: 1));
 }
 
 Future<String> _prepareExecutable(String directory) async {

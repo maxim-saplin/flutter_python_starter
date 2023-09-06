@@ -59,7 +59,7 @@ cd $pythonDir
 if [[ $nuitka == true ]]; then
     $PYTHON -m nuitka server.py --standalone --onefile --output-dir=./dist --output-filename="$exeNameFull"
 else
-    $PYTHON -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name="$exeNameFull" server.py
+    $PYTHON -m PyInstaller --onefile --noconfirm --clean --log-level=WARN --name="$exeNameFull" --paths="./grpc_generated" server.py
 fi
 cd $workingDir
 
