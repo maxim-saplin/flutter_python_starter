@@ -232,4 +232,4 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
 7. [ ] Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
 8. [ ] Authentication flow
     - [ ] Authentication in the web with JWT passed in server-side cookie via web proxy
-9. [ ] Tailor ./example launch.json for 3 platfroms
+9. [ ] Tailor ./example launch.json for 3 platforms
