@@ -100,7 +100,7 @@ Script parameters:
 
 Upon successful completion you'd get `Dart/Flutter and Python bindings have been generated for 'service.proto' definition` message
 
-# 2. Manual steps
+## 2. Manual steps
 
 1. Implement the actual service in Python module 
   - Implement the service using generated stubs, add gRPC generated imports with required definitions:
@@ -154,7 +154,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
     </dict>
     ```
 
-# 3. Bundling Python
+## 3. Bundling Python
 
 Run `./bundle-python.sh --flutterDir ./app --pythonDir ./server` in terminal. You can pass `--nuitka` flag to use Nuitka compiler instead of PyInstaller. It can provide better performance at a cost of lower stability.
 
@@ -176,7 +176,7 @@ When building Flutter app you can override host and port via --dart-define, e.g.
 `flutter build macos --dart-define port=8080 --dart-define host=ajax.com`
 This is needed when building Web and mobile clients to allow using remote server.
 
-# 4. Debugging & troubleshooting
+## 4. Debugging & troubleshooting
 
 1. You can skip running server from Flutter assets and have the app to connect to local server. You can pass in true to `Future<void> initPy([bool doNoStartPy = false])` OR  create a separate `launch.json` config and use --dart-define to set this flag (see example). E.g. the following config is automatically recognized via initPy():
             ```          
@@ -201,7 +201,7 @@ This is needed when building Web and mobile clients to allow using remote server
 
  5. You manually start generated Python binary from Flutter's `./assets` folder to test it for any issues (what if it crashes)
 
-# Remote server, Android and iOS client, Web client and gRPC Proxy
+## Remote server, Android and iOS client, Web client and gRPC Proxy
 
 You can target any client to use remote server, though it is specifically useful with mobile and Web as they can't bundle standalone Python server.
 
@@ -213,7 +213,7 @@ To do so you have 2 capabilities:
 
 Web clients can't work over HTTP2 and require a proxy in front of gRPC server. As of 2023 there's no working in process Python proxy (Sonora doesn't work with Dart client). The 2 options are Envoy suggested by Google and https://github.com/improbable-eng/grpc-web.
 
-# Considerations
+## Considerations
 
 - No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
@@ -221,7 +221,7 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
   - As of Sept 2023 Python 3.11 + Nuitka 1.8, example works on macOS and Windows. On Linux binary throws error when starting.
 - Linux - only Ubuntu was tested
 
-# 6. To Do
+## To Do
 
 1.  [ ]  Proper management of /assets
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
