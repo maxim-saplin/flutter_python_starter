@@ -1,10 +1,31 @@
-Starter kit for integrating Flutter and Python.
+# Starter kit for integrating Flutter and Python.
 
+## General idea/architecture
 
+- Allow to use Python code with all 6 platforms that Flutter supports.
+- macOS, Windows and Linux - Python code and runtime are packaged as self-contained/standalone executable bundled with Flutter app as assets. On first run Python executable is extracted. It contains a self-hosted gRPC server that is started and responds to calls from the Flutter app.
+- Android, iOS, Web (and if needed desktop as well) - use the same Python code hosted remotely.
+- Use gRPC proto definition as a single source of truth for API used by both Flutter client and Python server. 
+- Have code generation (protoc and scripts within this kit) do boilerplate for Dart and Python and let developers focus on business logic.
 
-A sample of integrated app is available under `example` folder
+# Requirements fulfilled
 
-# How To
+- Python code packed as self-contained binary not dependent on local Python installation
+- Works in Windows, Linux and macOS
+- Flutter UI and Python module run in separate OS processes
+- gRPC for communication between Flutter and Python
+- PyInstaller builds Python into console app that hosts gRPC service
+  - As experimental feature can use Nuitka to building standalone binary (smaller and faster)
+- The app can request a free port from OS and ask the server to start listening on this port
+- Flutter app carries the built Python binary as asset
+- Non-pure Python modules (e.g. those ones regerencing NumPy or TensorFlow) can be used
+- Flutter app manages lifecycle of Python process (starts and kills it), caches the binary (doesn't extract it on each launch), can support versioning and substitute extracted Python with a newer version from assets
+  - Timestamp is used for versioning, i.e. date time of PyInstaller execution is used as binary version
+- Compatibility mode with remotely hosted Python module for iOS, Android, macOS
+
+# Overview
+
+The kit is composed of 2 Bash scripts and a number of template source code files (in Python and Dart) that are used for code generation. You can copy the `starter-kit` folder to your project folder and follow the below instructions to get started.
 
 It is assumed that there're 2 folders that contain Flutter and Python projects. 2 scripts are provided to:
 1. Generate gRPC stubs and Dart/Pyhton scaffolding from .proto file and copy them to Flutter project (`prepare-sources.sh`)
@@ -26,21 +47,6 @@ There're 4 steps:
 - Git Bash terminal (for Windows) - install Git for Windows and Git Bash will be setup
 - If using Nuitka with macOS and Windows, official recent release must be installed (https://www.python.org/downloads/macos/), Apple and Windows store version of Pyhton won't work
  - After installing on Windows you'll have to manually add Python to PATH system environment variable
-
-
-# Requirements fulfilled
-
-- Python code packed as self-contained binary not dependent on local Python installation
-- Works in Windows, Linux and macOS
-- Flutter UI and Python module run in separate OS processes
-- gRPC for communication between Flutter and Python
-- PyInstaller builds Python into console app that hosts gRPC service
-  - As experimental feature can use Nuitka to building standalone binary (smaller and faster)
-- The app can request a free port from OS and ask the server to start listening on this port
-- Flutter app carries the built Python binary as asset
-- Flutter app manages lifecycle of Python process (starts and kills it), caches the binary (doesn't extract it on each launch), can support versioning and substitute extracted Python with a newer version from assets
-  - Timestamp is used for versioning, i.e. date time of PyInstaller execution is used as binary version
-- Compatibility mode with remotely hosted Python module for iOS, Android, macOS
 
 # 1. Preparing Sources
 
@@ -217,20 +223,21 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
 
 # 6. To Do
 
-1.[ ]  Proper management of /assets
+1.  [ ]  Proper management of /assets
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
   - [ ] When building for a specific platform make sure to remove assets from other platforms to save room
-2. [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
-3. [ ] Fix multi instance launch (currently next instance kills old server)
-4. [ ] Slow Python startup when launching Flutter app
+2.  [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
+3.  [ ] Fix multi instance launch (currently next instance kills old server)
+4.  [ ] Slow Python startup when launching Flutter app
   - PuInstaller 8-9s, Nuitka 7-8s (M1 Pro)
-5. [x] Awaiting error code on init, see if can be done faster
+5.  [x] Awaiting error code on init, see if can be done faster
      ```dart
       // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
       await Future.delayed(const Duration(seconds: 2));
      ```
-6. [ ] Look into singing (App, Mac) and distribution flow for binaries
-7. [x] Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
-8. [ ] Authentication flow
-    - [ ] Authentication in the web with JWT passed in server-side cookie via web proxy
-9. [ ] Tailor ./example launch.json for 3 platforms
+6.  [ ] Look into singing (App, Mac) and distribution flow for binaries
+7.  [x] Python has been loaded -> check for better probing, e.g. now when you start client it always says all is good
+8.  [ ] Authentication flow
+     - [ ] Authentication in the web with JWT passed in server-side cookie via web proxy
+9.  [ ] Tailor ./example launch.json for 3 platforms
+10. [ ] Plugin codegen and build actions into IDE events, e.g. see how to do more convenient update of .proto and Python parts without forgetting-to-run/running scripts manually

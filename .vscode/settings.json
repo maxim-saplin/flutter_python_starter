@@ -8,10 +8,10 @@
         "plaintext"
     ],
     "python.analysis.ignore": [
-        "templates"
+        "starter-kit/templates"
     ],
     "dart.analysisExcludedFolders": [
-        "templates"
+        "starter-kit/templates"
     ],
 
 }

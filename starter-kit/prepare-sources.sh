@@ -59,7 +59,8 @@ mkdir -p $pythonDir
 # Convert flutterDir and pythonDir to absolute paths
 flutterDir=$(realpath "$flutterDir" | sed 's/\/$//')
 pythonDir=$(realpath "$pythonDir" | sed 's/\/$//')
-workingDir=$(dirname "$(realpath "$0")")
+scriptDir=$(dirname "$(realpath "$0")")
+workingDir=$(pwd)
 protoDir=$(dirname "$proto" | sed 's/\/$//')
 grpcGeneratedDir=$flutterDir/lib/grpc_generated
 protoFile=$(basename "$proto")
@@ -147,23 +148,23 @@ fi
 
 # Dart clients
 if [[ ! -f "$grpcGeneratedDir/client.dart" ]]; then
-    cp "$workingDir/templates/client.dart" "$grpcGeneratedDir/client.dart"
+    cp "$scriptDir/templates/client.dart" "$grpcGeneratedDir/client.dart"
 fi
 if [[ ! -f "$grpcGeneratedDir/client_native.dart" ]]; then
-    cp "$workingDir/templates/client_native.dart" "$grpcGeneratedDir/client_native.dart"
+    cp "$scriptDir/templates/client_native.dart" "$grpcGeneratedDir/client_native.dart"
 fi
 if [[ ! -f "$grpcGeneratedDir/client_web.dart" ]]; then
-    cp "$workingDir/templates/client_web.dart" "$grpcGeneratedDir/client_web.dart"
+    cp "$scriptDir/templates/client_web.dart" "$grpcGeneratedDir/client_web.dart"
 fi
 
 if [ ! -f "$grpcGeneratedDir/init_py.dart" ]; then
-    cp "$workingDir/templates/init_py.dart" "$grpcGeneratedDir/init_py.dart"
+    cp "$scriptDir/templates/init_py.dart" "$grpcGeneratedDir/init_py.dart"
 fi
 if [ ! -f "$grpcGeneratedDir/init_py_native.dart" ]; then
-    cp "$workingDir/templates/init_py_native.dart" "$grpcGeneratedDir/init_py_native.dart"
+    cp "$scriptDir/templates/init_py_native.dart" "$grpcGeneratedDir/init_py_native.dart"
 fi
 if [ ! -f "$grpcGeneratedDir/init_py_web.dart" ]; then
-    cp "$workingDir/templates/init_py_web.dart" "$grpcGeneratedDir/init_py_web.dart"
+    cp "$scriptDir/templates/init_py_web.dart" "$grpcGeneratedDir/init_py_web.dart"
 fi
 
 echo "// !Will be rewriten upon \`prepare sources\` or \`build\` actions by Flutter-Python starter kit" > $grpcGeneratedDir/py_file_info.dart
@@ -176,14 +177,14 @@ cd $workingDir
 # Generate Python code
 mkdir -p $pythonDir
 mkdir -p $pythonDir/grpc_generated
-cd $protoDir # changing dir to avoid created nexted folders in --dart_out beacause of implicitly following grpc namespaces
+cd $protoDir # changing dir to avoid created nested folders in --dart_out beacause of implicitly following grpc namespaces
 $PYTHON -m grpc_tools.protoc -I. --python_out=$pythonDir/grpc_generated --grpc_python_out=$pythonDir/grpc_generated $protoFile
 cd $workingDir
-cp templates/__init__.py $pythonDir/grpc_generated
+cp $scriptDir/templates/__init__.py $pythonDir/grpc_generated
 
 # Pyhton boilderplate code for running self-hosted gRPC server
 serverpy=$(cat << EOF
-$(<templates/server.py)
+$(<$scriptDir/templates/server.py)
 EOF
 )
 
@@ -199,4 +200,6 @@ if ! grep -q "^grpcio-health-checking" "$pythonDir/requirements.txt"; then
   echo -e "\ngrpcio-health-checking" >> "$pythonDir/requirements.txt"
 fi
 
-echo -e "\e[32m\nDart/Flutter and Python bindings have been generated for '$proto' definition"
+GREEN='\033[0;32m'
+NC='\033[0m'
+echo -e "\n${GREEN}Dart/Flutter and Python bindings have been generated for '$proto' definition${NC}"

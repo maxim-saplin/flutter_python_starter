@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "prepare-sources",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/prepare-sources.sh",
+            "program": "${workspaceFolder}/starter-kit/prepare-sources.sh",
             "args": ["--proto", "./example/service.proto", 
                     "--flutterDir", "./example/app",
                     "--pythonDir", "./example/server"]
@@ -19,7 +19,7 @@
             "request": "launch",
             "name": "bundle-python",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/bundle-python.sh",
+            "program": "${workspaceFolder}/starter-kit/bundle-python.sh",
             "args": ["--proto", "./example/service.proto", 
                     "--flutterDir", "./example/app",
                     "--pythonDir", "./example/server"]
@@ -40,20 +40,6 @@
             "cwd": "example/app",
             "request": "launch",
             "type": "dart",
-        },
-        {
-            "name": "app (profile mode)",
-            "cwd": "example/app",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "app (release mode)",
-            "cwd": "example/app",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
         }
     ]
 }

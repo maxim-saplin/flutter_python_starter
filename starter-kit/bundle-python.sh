@@ -36,7 +36,7 @@ done
 
 flutterDir=$(realpath "$flutterDir" | sed 's/\/$//')
 pythonDir=$(realpath "$pythonDir" | sed 's/\/$//')
-workingDir=$(dirname "$(realpath "$0")")
+workingDir=$(pwd)
 
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
   PYTHON=python
@@ -90,4 +90,6 @@ mv "$flutterDir"/lib/grpc_generated/py_file_info_temp.dart "$flutterDir"/lib/grp
 echo "const exeFileName = '$exeName';" >> "$flutterDir"/lib/grpc_generated/py_file_info.dart
 echo "const currentFileVersionFromAssets = '$currentDateTime';" >> "$flutterDir"/lib/grpc_generated/py_file_info.dart
 
-echo -e "\e[32m\nPython built and put to $flutterDir/assets/$exeNameFull"
+GREEN='\033[0;32m'
+NC='\033[0m'
+echo -e "\n${GREEN}Python built and put to $flutterDir/assets/$exeNameFull${NC}"
