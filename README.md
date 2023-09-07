@@ -48,7 +48,7 @@ There're 4 steps:
 - Python 3.9+ 
 - Chocolately package manager (for Windows)
 - Git Bash terminal (for Windows) - install Git for Windows and Git Bash will be setup
-- If using Nuitka with macOS and Windows, official recent release must be installed (https://www.python.org/downloads/macos/), Apple and Windows store version of Pyhton won't work
+- If using Nuitka with macOS and Windows, official recent release of Pyhthon must be installed (https://www.python.org/downloads/macos/), Apple and Windows store versions of Pyhton won't work
  - After installing on Windows you'll have to manually add Python to PATH system environment variable
 
 # 1. Preparing Sources
