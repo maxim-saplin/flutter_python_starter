@@ -11,7 +11,7 @@
 <img src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/3fe5563d-d6f0-4ab0-92c3-0735a83ce4b5" alt="drawing" width="400"/>
 </p>
 
-# Requirements fulfilled
+## Requirements fulfilled
 
 - Python code packed as self-contained binary not dependent on local Python installation
 - Works in Windows, Linux and macOS
@@ -42,7 +42,7 @@ There're 4 steps:
 3. Building Python part via PyInstaller and bundling it as asset within Flutter project
 4. Debugging
 
-# Prerequisites to use starter kit
+## Prerequisites to use starter kit
 
 - Flutter SDK 
 - Python 3.9+ 
@@ -51,17 +51,17 @@ There're 4 steps:
 - If using Nuitka with macOS and Windows, official recent release of Pyhthon must be installed (https://www.python.org/downloads/macos/), Apple and Windows store versions of Pyhton won't work
  - After installing on Windows you'll have to manually add Python to PATH system environment variable
 
-# 1. Preparing Sources
+## 1. Preparing Sources
 
-## 1. Preparing Flutter and Python projects
+### 1. Preparing Flutter and Python projects
 
 Put Flutter app and Python code side by side. Let's assume we have Flutter in `app` folder and `service` folder for Python
 
-## 2. Define gRPC service in .proto file
+### 2. Define gRPC service in .proto file
 
 This is the service definition to be implemented by Python and used by Flutter client.
 
-## 3. Dart and Python boilerplate
+### 3. Dart and Python boilerplate
 
 Run `./prepare-sources.sh --proto ./service.proto --flutterDir ./app --pythonDir ./server` in terminal. 
 
