@@ -1,4 +1,4 @@
-# Starter kit for integrating Flutter and Python
+# Flutter-Python Starter Kit
 
 ## General idea/architecture
 
