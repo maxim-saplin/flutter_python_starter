@@ -1,12 +1,15 @@
-# Starter kit for integrating Flutter and Python.
+# Starter kit for integrating Flutter and Python
 
 ## General idea/architecture
 
 - Allow to use Python code with all 6 platforms that Flutter supports.
-- macOS, Windows and Linux - Python code and runtime are packaged as self-contained/standalone executable bundled with Flutter app as assets. On first run Python executable is extracted. It contains a self-hosted gRPC server that is started and responds to calls from the Flutter app.
+- macOS, Windows and Linux - Python code and runtime are packaged as self-contained/standalone executable bundled with Flutter app as assets. On the first run Python executable is extracted. It contains a self-hosted gRPC server that is started and responds to calls from the Flutter app.
 - Android, iOS, Web (and if needed desktop as well) - use the same Python code hosted remotely.
 - Use gRPC proto definition as a single source of truth for API used by both Flutter client and Python server. 
 - Have code generation (protoc and scripts within this kit) do boilerplate for Dart and Python and let developers focus on business logic.
+<p align="center">
+<img src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/3fe5563d-d6f0-4ab0-92c3-0735a83ce4b5" alt="drawing" width="400"/>
+</p>
 
 # Requirements fulfilled
 
@@ -45,7 +48,7 @@ There're 4 steps:
 - Python 3.9+ 
 - Chocolately package manager (for Windows)
 - Git Bash terminal (for Windows) - install Git for Windows and Git Bash will be setup
-- If using Nuitka with macOS and Windows, official recent release must be installed (https://www.python.org/downloads/macos/), Apple and Windows store version of Pyhton won't work
+- If using Nuitka with macOS and Windows, official recent release of Pyhthon must be installed (https://www.python.org/downloads/macos/), Apple and Windows store versions of Pyhton won't work
  - After installing on Windows you'll have to manually add Python to PATH system environment variable
 
 # 1. Preparing Sources
