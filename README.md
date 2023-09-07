@@ -9,7 +9,7 @@
 - Have code generation (protoc and scripts within this kit) do boilerplate for Dart and Python and let developers focus on business logic.
 
 <p align="center">
-<img> src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/c599464f-49da-4971-8836-7ee22ed2daa8" alt="drawing" />
+<img src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/c599464f-49da-4971-8836-7ee22ed2daa8" alt="drawing" />
 </p>
 
 ## Requirements fulfilled
