@@ -1,4 +1,4 @@
-# Starter kit for integrating Flutter and Python.
+# Starter kit for integrating Flutter and Python
 
 ## General idea/architecture
 
@@ -7,6 +7,8 @@
 - Android, iOS, Web (and if needed desktop as well) - use the same Python code hosted remotely.
 - Use gRPC proto definition as a single source of truth for API used by both Flutter client and Python server. 
 - Have code generation (protoc and scripts within this kit) do boilerplate for Dart and Python and let developers focus on business logic.
+
+![flutter_python_starter-2](https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/1d354f0d-9fde-482a-b43a-9ad812179f6f)
 
 # Requirements fulfilled
 
