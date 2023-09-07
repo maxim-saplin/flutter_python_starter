@@ -8,7 +8,7 @@
 - Use gRPC proto definition as a single source of truth for API used by both Flutter client and Python server. 
 - Have code generation (protoc and scripts within this kit) do boilerplate for Dart and Python and let developers focus on business logic.
 
-<img src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/1d354f0d-9fde-482a-b43a-9ad812179f6f" alt="drawing" width="400"/>
+<img src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/3fe5563d-d6f0-4ab0-92c3-0735a83ce4b5" alt="drawing" width="400"/>
 
 # Requirements fulfilled
 
