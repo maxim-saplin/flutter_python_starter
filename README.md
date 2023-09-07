@@ -3,7 +3,7 @@
 ## General idea/architecture
 
 - Allow to use Python code with all 6 platforms that Flutter supports.
-- macOS, Windows and Linux - Python code and runtime are packaged as self-contained/standalone executable bundled with Flutter app as assets. On first run Python executable is extracted. It contains a self-hosted gRPC server that is started and responds to calls from the Flutter app.
+- macOS, Windows and Linux - Python code and runtime are packaged as self-contained/standalone executable bundled with Flutter app as assets. On the first run Python executable is extracted. It contains a self-hosted gRPC server that is started and responds to calls from the Flutter app.
 - Android, iOS, Web (and if needed desktop as well) - use the same Python code hosted remotely.
 - Use gRPC proto definition as a single source of truth for API used by both Flutter client and Python server. 
 - Have code generation (protoc and scripts within this kit) do boilerplate for Dart and Python and let developers focus on business logic.
