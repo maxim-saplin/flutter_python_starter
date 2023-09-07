@@ -7,6 +7,7 @@
 - Android, iOS, Web (and if needed desktop as well) - use the same Python code hosted remotely.
 - Use gRPC proto definition as a single source of truth for API used by both Flutter client and Python server. 
 - Have code generation (protoc and scripts within this kit) do boilerplate for Dart and Python and let developers focus on business logic.
+![flutter_python_starter-Copy of Page-1-3](https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/c599464f-49da-4971-8836-7ee22ed2daa8)
 
 <p align="center">
 <img src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/3e9dd61c-1fc8-4330-abf9-5bf4653bec17" alt="drawing" width="700"/>
