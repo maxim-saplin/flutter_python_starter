@@ -16,7 +16,7 @@ For convenience there 5 VSCode launch configurations in /app folder (Flutter pro
 
 # Shortcuts for Bash scripts
 
-chmod 755 prepare-sources.sh; chmod 755 bundle-python.sh
+chmod 755 ./starter-kit/prepare-sources.sh; chmod 755 ./starter-kit/bundle-python.sh
 
 ./starter-kit/prepare-sources.sh --proto ./example/service.proto --flutterDir ./example/app --pythonDir ./example/server
 ./starter-kit/bundle-python.sh --flutterDir ./example/app --pythonDir ./example/server 

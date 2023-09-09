@@ -22,7 +22,7 @@
   - As experimental feature can use Nuitka to building standalone binary (smaller and faster)
 - The app can request a free port from OS and ask the server to start listening on this port
 - Flutter app carries the built Python binary as asset
-- Non-pure Python modules (e.g. those ones regerencing NumPy or TensorFlow) can be used
+- Non-pure Python modules (e.g. those ones referencing NumPy or TensorFlow) can be used
 - Flutter app manages lifecycle of Python process (starts and kills it), caches the binary (doesn't extract it on each launch), can support versioning and substitute extracted Python with a newer version from assets
   - Timestamp is used for versioning, i.e. date time of PyInstaller execution is used as binary version
 - Compatibility mode with remotely hosted Python module for iOS, Android, macOS
