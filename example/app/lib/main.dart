@@ -1,11 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:app/grpc_generated/client.dart';
 import 'package:app/grpc_generated/init_py.dart';
 import 'package:app/grpc_generated/init_py_native.dart';
 import 'package:app/grpc_generated/service.pbgrpc.dart';
-import 'package:flutter/material.dart';
 
 Future<void> pyInitResult = Future(() => null);
 
@@ -24,9 +23,6 @@ class MainApp extends StatefulWidget {
 }
 
 class MainAppState extends State<MainApp> with WidgetsBindingObserver {
-  List<int> randomIntegers =
-      List.generate(40, (index) => Random().nextInt(100));
-
   @override
   Future<AppExitResponse> didRequestAppExit() {
     shutdownPyIfAny();
@@ -38,6 +34,9 @@ class MainAppState extends State<MainApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
+
+  List<int> randomIntegers =
+      List.generate(40, (index) => Random().nextInt(100));
 
   @override
   Widget build(BuildContext context) {

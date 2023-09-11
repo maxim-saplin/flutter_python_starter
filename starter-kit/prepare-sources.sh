@@ -166,6 +166,20 @@ fi
 if [ ! -f "$grpcGeneratedDir/init_py_web.dart" ]; then
     cp "$scriptDir/templates/init_py_web.dart" "$grpcGeneratedDir/init_py_web.dart"
 fi
+if [ ! -f "$grpcGeneratedDir/health.pb.dart" ]; then
+    cp "$scriptDir/templates/health.pb.dart" "$grpcGeneratedDir/health.pb.dart"
+fi
+if [ ! -f "$grpcGeneratedDir/health.pbenum.dart" ]; then
+    cp "$scriptDir/templates/health.pbenum.dart" "$grpcGeneratedDir/health.pbenum.dart"
+fi
+if [ ! -f "$grpcGeneratedDir/health.pbgrpc.dart" ]; then
+    cp "$scriptDir/templates/health.pbgrpc.dart" "$grpcGeneratedDir/health.pbgrpc.dart"
+fi
+if [ ! -f "$grpcGeneratedDir/health.pbjson.dart" ]; then
+    cp "$scriptDir/templates/health.pbjson.dart" "$grpcGeneratedDir/health.pbjson.dart"
+fi
+
+
 
 echo "// !Will be rewriten upon \`prepare sources\` or \`build\` actions by Flutter-Python starter kit" > $grpcGeneratedDir/py_file_info.dart
 echo "const versionFileName = 'server_py_version.txt';" >> $grpcGeneratedDir/py_file_info.dart
