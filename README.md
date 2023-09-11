@@ -25,7 +25,9 @@
 - Non-pure Python modules (e.g. those ones referencing NumPy or TensorFlow) can be used
 - Flutter app manages lifecycle of Python process (starts and kills it), caches the binary (doesn't extract it on each launch), can support versioning and substitute extracted Python with a newer version from assets
   - Timestamp is used for versioning, i.e. date time of PyInstaller execution is used as binary version
-- Compatibility mode with remotely hosted Python module for iOS, Android, macOS
+- Compatibility mode with remotely hosted Python module for iOS, Android, Web
+  - For web client gRPC Proxy is supported, Dart client helper manages the client channel for the user
+- For Flutter there're heler classes that wrap the functionality supporting the above requirements
 
 # Overview
 
