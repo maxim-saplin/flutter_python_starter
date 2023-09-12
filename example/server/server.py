@@ -5,7 +5,7 @@ from grpc_health.v1 import health_pb2_grpc
 from grpc_health.v1 import health
 # TODO, import generated gRPC stubs
 from grpc_generated import service_pb2_grpc
-# TODO, import yor service implementation
+# TODO, import your service implementation
 from number_sorting import NumberSortingService  
 
 def serve():
