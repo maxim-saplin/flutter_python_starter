@@ -247,3 +247,5 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
      - [ ] Authentication in the web with JWT passed in server-side cookie via web proxy
 9.  [ ] Tailor ./example launch.json for 3 platforms
 10. [ ] Plugin codegen and build actions into IDE events, e.g. see how to do more convenient update of .proto and Python parts without forgetting-to-run/running scripts manually
+11. [ ] server.py, add param to determine if `localhost` (local only) or `[::]` (inbouind remote connection) will be used (`server.add_insecure_port('[::]:50051')`)
+12. [ ] When debugging the app may stop silently upon launching due to swallowed exceptions when probing Python
