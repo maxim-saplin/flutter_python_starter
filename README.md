@@ -148,7 +148,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
    NumberSortingServiceClient(getClientChannel())
    ```
   
-  3. For iOS, to let the app connect to remote gRPC server, in ios/Runner/Info.plist add this:
+  3. For iOS, to let the app connect to remote gRPC server, in `ios/Runner/Info.plist` add this:
   ```xml
     <key>NSAppTransportSecurity</key>
     <dict>
