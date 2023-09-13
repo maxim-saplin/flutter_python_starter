@@ -131,9 +131,6 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
   - Add Python executable shutdown request in app exit, e.g.:
   ```dart
   class MainAppState extends State<MainApp> with WidgetsBindingObserver {
-    List<int> randomIntegers =
-        List.generate(40, (index) => Random().nextInt(100));
-
     @override
     Future<AppExitResponse> didRequestAppExit() {
       shutdownPyIfAny();
