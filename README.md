@@ -149,7 +149,7 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
    ```
   
   3. For iOS, to let the app connect to remote gRPC server, in ios/Runner/Info.plist add this
-    ```
+    ```XML
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsLocalNetworking</key>
