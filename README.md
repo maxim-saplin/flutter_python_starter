@@ -131,9 +131,6 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
   - Add Python executable shutdown request in app exit, e.g.:
   ```dart
   class MainAppState extends State<MainApp> with WidgetsBindingObserver {
-    List<int> randomIntegers =
-        List.generate(40, (index) => Random().nextInt(100));
-
     @override
     Future<AppExitResponse> didRequestAppExit() {
       shutdownPyIfAny();
@@ -151,14 +148,14 @@ Upon successful completion you'd get `Dart/Flutter and Python bindings have been
    NumberSortingServiceClient(getClientChannel())
    ```
   
-  3. For iOS, to let the app connect to remote gRPC server, in ios/Runner/Info.plist add this
-    ```
+  3. For iOS, to let the app connect to remote gRPC server, in ios/Runner/Info.plist add this:
+  ```xml
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsLocalNetworking</key>
         <true/>
     </dict>
-    ```
+  ```
 
 ## 3. Bundling Python
 
