@@ -216,13 +216,17 @@ To do so you have 2 capabilities:
 
 Web clients can't work over HTTP2 and require a proxy in front of gRPC server. As of 2023 there's no working in process Python proxy (Sonora doesn't work with Dart client). The 2 options are Envoy suggested by Google and https://github.com/improbable-eng/grpc-web.
 
-## Considerations
+## Considerations/Notes
 
 - No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
 - Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
   - As of Sept 2023 Python 3.11 + Nuitka 1.8, example works on macOS and Windows. On Linux binary throws error when starting.
 - Linux - only Ubuntu was tested
+- When using VSCode and having multiple Python installed, make sure you pick the right one (same used for running scripts and for debugging/editing). I.e. is default system Python interpreter is different from the one picked in VSCode you can get all sort of IDE isses, such as wrong warning from PyLace, failed debugging etc.:
+Click Python version at the bottom, in the popup check you got the right Python (recomended in my case was not chosen)
+<img width="169" alt="image" src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/c35c413d-37e6-4593-80c6-3a3075eb55ca">
+<img width="611" alt="image" src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/afd16979-1749-47dc-9611-79ef480d0629">
 
 ## To Do
 
