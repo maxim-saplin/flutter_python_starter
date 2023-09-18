@@ -230,13 +230,13 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
 
 ## To Do
 
-1.  [ ]  Proper management of /assets
+1.  [ ] Proper management of /assets
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
   - [ ] When building for a specific platform make sure to remove assets from other platforms to save room
 2.  [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
 3.  [ ] Fix multi instance launch (currently next instance kills old server)
 4.  [ ] Slow Python startup when launching Flutter app
-  - PuInstaller 8-9s, Nuitka 7-8s (M1 Pro)
+  - PyInstaller 8-9s, Nuitka 7-8s (M1 Pro)
 5.  [x] Awaiting error code on init, see if can be done faster
      ```dart
       // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
