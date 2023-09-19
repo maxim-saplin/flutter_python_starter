@@ -252,3 +252,18 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
 12. [x] When debugging the app may stop silently upon launching due to swallowed exceptions when probing Python
     - VSCode Debug Pane, in the bottom left there's BREAKPOINTs section, disable expcetions
 13. [ ] Updte iOS `ios/Runner/Info.plist` to allow gRPC networking
+14. [ ] VScode debugging, sort out auto start of server
+    ```
+        {
+            "name": "app (remote server, auto start)",
+            "type": "dart",
+            "request": "launch",
+            "program": "app/lib/main.dart",
+            "toolArgs": [
+                "--dart-define",
+                "useRemote=true",
+              ],
+            "preLaunchTask": "start server",
+            //"postDebugTask": "stop server" // this one kills Flutter UI when doing hot restart, better keep server running to keep host restart working
+        },
+    ```
