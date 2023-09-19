@@ -251,3 +251,4 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
 11. [ ] server.py, add param to determine if `localhost` (local only) or `[::]` (inbouind remote connection) will be used (`server.add_insecure_port('[::]:50051')`)
 12. [x] When debugging the app may stop silently upon launching due to swallowed exceptions when probing Python
     - VSCode Debug Pane, in the bottom left there's BREAKPOINTs section, disable expcetions
+13. [ ] Updte iOS `ios/Runner/Info.plist` to allow gRPC networking
