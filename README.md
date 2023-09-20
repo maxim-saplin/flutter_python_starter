@@ -216,23 +216,27 @@ To do so you have 2 capabilities:
 
 Web clients can't work over HTTP2 and require a proxy in front of gRPC server. As of 2023 there's no working in process Python proxy (Sonora doesn't work with Dart client). The 2 options are Envoy suggested by Google and https://github.com/improbable-eng/grpc-web.
 
-## Considerations
+## Considerations/Notes
 
 - No cross-compilation, Windows, macOS and Linux are required for the build
 - Boilerplate works on with one .proto file. In real project there can be multiple proto files/services, scripts would require manual updates
 - Nuitka while being a compiled and faster version can be tricky and unstable. I.e. while building example I got successful complication yet upon running the binary I received error that `numpy` import was not found. Only `pip3 install --upgrade numpy` helped solve the issues
   - As of Sept 2023 Python 3.11 + Nuitka 1.8, example works on macOS and Windows. On Linux binary throws error when starting.
 - Linux - only Ubuntu was tested
+- When using VSCode and having multiple Python installed, make sure you pick the right one (same used for running scripts and for debugging/editing). I.e. is default system Python interpreter is different from the one picked in VSCode you can get all sort of IDE isses, such as wrong warning from PyLace, failed debugging etc.:
+  - Click Python version at the bottom (<img width="162" alt="268485002-c35c413d-37e6-4593-80c6-3a3075eb55ca-2" src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/3c8b1a04-86bc-49ea-b5dc-abf4dee06aaf">), in the popup check you got the right Python (recomended in my case was not chosen)
+
+    <img width="611" alt="image" src="https://github.com/maxim-saplin/flutter_python_starter/assets/7947027/afd16979-1749-47dc-9611-79ef480d0629">
 
 ## To Do
 
-1.  [ ]  Proper management of /assets
+1.  [ ] Proper management of /assets
   - [ ] Handle situation when there're already assets defined in pubspec.yaml
   - [ ] When building for a specific platform make sure to remove assets from other platforms to save room
 2.  [x] Investigate "Do you want the application “app.app” to accept incoming network connections?" request upon first launch, shouldn't be any - fixed, didn't use loopback address when requesting free port from OS
 3.  [ ] Fix multi instance launch (currently next instance kills old server)
 4.  [ ] Slow Python startup when launching Flutter app
-  - PuInstaller 8-9s, Nuitka 7-8s (M1 Pro)
+  - PyInstaller 8-9s, Nuitka 7-8s (M1 Pro)
 5.  [x] Awaiting error code on init, see if can be done faster
      ```dart
       // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
@@ -245,4 +249,21 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
 9.  [ ] Tailor ./example launch.json for 3 platforms
 10. [ ] Plugin codegen and build actions into IDE events, e.g. see how to do more convenient update of .proto and Python parts without forgetting-to-run/running scripts manually
 11. [ ] server.py, add param to determine if `localhost` (local only) or `[::]` (inbouind remote connection) will be used (`server.add_insecure_port('[::]:50051')`)
-12. [ ] When debugging the app may stop silently upon launching due to swallowed exceptions when probing Python
+12. [x] When debugging the app may stop silently upon launching due to swallowed exceptions when probing Python
+    - VSCode Debug Pane, in the bottom left there's BREAKPOINTs section, disable expcetions
+13. [ ] Updte iOS `ios/Runner/Info.plist` to allow gRPC networking
+14. [ ] VScode debugging, sort out auto start of server
+    ```
+        {
+            "name": "app (remote server, auto start)",
+            "type": "dart",
+            "request": "launch",
+            "program": "app/lib/main.dart",
+            "toolArgs": [
+                "--dart-define",
+                "useRemote=true",
+              ],
+            "preLaunchTask": "start server",
+            //"postDebugTask": "stop server" // this one kills Flutter UI when doing hot restart, better keep server running to keep host restart working
+        },
+    ```
