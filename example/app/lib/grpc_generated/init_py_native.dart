@@ -19,7 +19,7 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
     defaultPort = port;
   }
 
-  shutdownPyIfAny();
+  shutdownPyIfAnyImpl();
 
   if (defaultTargetPlatform == TargetPlatform.macOS ||
       defaultTargetPlatform == TargetPlatform.linux) {
@@ -33,12 +33,12 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
     exitCode = v;
   });
 
-  // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
+  // Give a couple of seconds to make sure there're no exceptions upon lanuching Python server
+
+  await Future.delayed(const Duration(seconds: 1));
   if (exitCode != null) {
     throw 'Failure while launching server process. It stopped right after starting. Exit code: $exitCode';
   }
-
-  return Future.delayed(const Duration(seconds: 1));
 }
 
 Future<String> _prepareExecutable(String directory) async {
@@ -89,7 +89,7 @@ Future<void> _writeFile(File file, ByteData pyExe, File versionFile) async {
 }
 
 /// Searches for any processes that match Python server and kills those
-Future<void> shutdownPyIfAny() async {
+Future<void> shutdownPyIfAnyImpl() async {
   var name = _getAssetName();
 
   switch (defaultTargetPlatform) {

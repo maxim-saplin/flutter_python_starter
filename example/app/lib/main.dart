@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:app/grpc_generated/client.dart';
 import 'package:app/grpc_generated/init_py.dart';
-import 'package:app/grpc_generated/init_py_native.dart';
 import 'package:app/grpc_generated/service.pbgrpc.dart';
 
 Future<void> pyInitResult = Future(() => null);

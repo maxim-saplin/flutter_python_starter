@@ -67,3 +67,9 @@ void _initParamsFromEnvVars(bool doNoStartPy) {
     defaultPort = portOverride;
   }
 }
+
+/// Searches for any processes that match Python server and kills those.
+/// Does nothing in the Web environment.
+Future<void> shutdownPyIfAny() {
+  return shutdownPyIfAnyImpl();
+}
