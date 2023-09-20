@@ -237,6 +237,7 @@ Web clients can't work over HTTP2 and require a proxy in front of gRPC server. A
 3.  [ ] Fix multi instance launch (currently next instance kills old server)
 4.  [ ] Slow Python startup when launching Flutter app
   - PyInstaller 8-9s, Nuitka 7-8s (M1 Pro)
+  - Consider use --one-dir arg with PyInstaller and zip/unzip it via Flutter
 5.  [x] Awaiting error code on init, see if can be done faster
      ```dart
       // Give couple of seconds to make sure there're no exceptions upon lanuching Python server
