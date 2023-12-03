@@ -19,7 +19,7 @@ Future<void> initPyImpl({String host = "localhost", int? port}) async {
     defaultPort = port;
   }
 
-  shutdownPyIfAnyImpl();
+  await shutdownPyIfAnyImpl();
 
   if (defaultTargetPlatform == TargetPlatform.macOS ||
       defaultTargetPlatform == TargetPlatform.linux) {
